@@ -1,0 +1,101 @@
+body{
+    background-color: rgb(227, 236, 252) !important;
+    font-family: 'Work Sans', sans-serif !important;
+}
+
+nav{
+    font-weight: 500;
+    border-bottom: 2px solid #000;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+.bg{
+    background-color: #fff !important;
+}
+
+.boxes{
+    margin-top: 100px;
+    margin-bottom: 30px;
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+.horizontal{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+}
+
+.card-container{
+}
+
+img.video-icon{
+    width: 48px;
+}  
+
+.details{
+    margin-top: 24px;
+}
+
+
+
+.card{
+    padding: 24px;
+}
+
+.card-border{
+    border: 2px solid #000 !important;
+}
+
+.card-title{
+    font-weight: 600;
+    margin-bottom: 0%;
+}
+
+.btn{
+    font-weight: 500 !important;
+}
+
+.title-sm{
+    font-weight: 500;
+
+}
+
+ul.subjects{
+    list-style: none;
+    margin-left: 0% !important;
+    padding-left: 0% !important;
+}
+
+ul.subjects li{
+    padding: 16px;
+    transition: all .2s ease;
+
+}
+
+ul.subjects li:hover{
+    background-color: aliceblue;
+}
+
+ul.subjects li a{
+    text-decoration: none;
+    font-weight: 500;
+}
+
+img.subject-icon{
+    width: 24px;
+    margin-right: 16px;
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    
+    .horizontal{
+        flex-direction: column;
+    }
+
+}

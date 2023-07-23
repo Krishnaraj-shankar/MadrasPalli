@@ -1,0 +1,31 @@
+.bg{
+    background-color: #fff !important;
+}
+
+.container{
+    margin-left: 6% !important;
+    margin-right: 6% !important;
+}
+
+.boxes{
+    background-color: #fff !important;
+    padding: 24px;
+    border-radius: 16px;
+    border: 2px solid #000;
+}
+
+.video-player{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+iframe{
+    width: 600px;
+    height: 400px;
+}
+
+.links{
+    width: 100%;
+}
+
