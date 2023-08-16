@@ -5,17 +5,18 @@ const client = new Client({
     host:'localhost',
     user:'postgres',
     port:5432,
-    password:"root",
+    password:"admin",
     database:"madrasPalli"
 })
 
 client.connect();
 
-client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
-    if(!err) console.log("outuput: ",res.rows);
-    else console.log("err: ",err.message);
-    client.end();
-})
+// client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
+//     if(!err) console.log("outuput: ",res.rows);
+//     else console.log("err: ",err.message);
+//     client.end();
+// })
+
 
 // client.query(`select * from maths_10th`,(err,res)=>{
 //     //possible data are rowCount->number of rows we got, command->we given command, rows -> values 
@@ -41,6 +42,13 @@ defaultLayout: 'index',
 partialsDir: __dirname + '/views/partials/',
 }));
 app.use(express.static('public'))
+
+// Use built-in middleware to parse JSON request bodies
+app.use(express.json());
+
+// Use built-in middleware to parse URL-encoded request bodies
+app.use(express.urlencoded({ extended: true }));
+
 
 
 
@@ -68,12 +76,79 @@ app.get('/about', (req,res) => {
 
 
 
-app.get('/subject', (req,res) => {
-    res.render('subject', {
-        layout : 'index',
-        title: 'Subject',
-    });
-});
+
+// app.get('/subject', async (req,res) => { 
+
+//     let data = () =>{
+//         client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
+//             if(!err){
+//                 console.log("outuput: ",res.rows);
+//                 return res.rows
+//             } 
+//             else console.log("err: ",err.message);
+//             client.end();
+//         })
+//     }
+
+
+
+//     res.render('subject', {
+//         layout : 'index',
+//         title: 'Subject',
+//         data: await data()
+//     });
+// });
+
+
+// app.get('/subject', (req,res) => { 
+
+//     const chapterNum = req.query.chapterNum;
+
+//     function fetchData() {
+//         return new Promise((resolve, reject) => {
+//             client.query(`SELECT id FROM maths_10th WHERE (chapter_no = 1 AND exercise_no = 2 AND problem_no = 2)`, (err, result) => {
+//                 if (err) {
+//                     reject(err);
+//                 } else {
+//                     console.log(result.rows)
+//                     resolve(result.rows);
+//                 }
+//             });
+//         });
+//     }
+
+//     fetchData()
+//         .then(rows => {
+//             res.render('subject', {
+//                 layout: 'index',
+//                 title: 'Subject',
+//                 data: JSON.stringify(rows)
+//             });
+//         })
+//         .catch(error => {
+//             console.error('Error:', error.message);
+//             res.status(500).send('An error occurred');
+//         });
+
+
+
+
+
+// });
+
+app.get("/subject",(req,res)=>{
+    res.render('subject')
+        
+})
+
+app.post('/subject', function (req, res) {
+    console.log("data: ",req.body);
+  res.send('welcome, ' + req.body)
+})
+
+
+
+
 
 app.listen(port, () => console.log(`App listening to port ${port}`));
 
