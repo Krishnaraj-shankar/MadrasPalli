@@ -24,9 +24,19 @@ nav{
 }
 
 
+header{
+    background-image: url('images/bg-illus.png') !important;
+    background-size: cover;
+    height: 100vh;
+
+}
+
 
 .hero{
-    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
     padding-right: 6%;
     padding-left: 6%;
     margin-bottom: 32px;
@@ -35,6 +45,7 @@ nav{
 }
 
 p.tamil-display{
+    padding-top: 150px;
     font-family: 'Noto Sans Tamil', sans-serif !important;
     font-size: 40px;
     font-weight: 700;
@@ -46,6 +57,7 @@ p.class-info{
     padding: 8px 16px;
     font-weight: 600 !important;
     border-radius: 100px;
+    width: fit-content;
 }
 
 
@@ -139,20 +151,72 @@ img.subject-icon{
     font-size: 20px;
 }
 
-.video-container{
-    margin: 24px 16px;
-    border-radius: 8px !important;
+.title-sm{
+    font-weight: 500 !important;
+}
+
+
+
+/* Chapters */
+
+.chapters{
+    margin: 120px 32px;
+    padding: 32px 16px;
     background-color: #fff;
+    border-radius: 8px !important;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-.video-data{
-    padding: 16px;
+
+.all-chap{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border-bottom: 1px solid #b9b9b9 !important;
 }
 
-.curr-video{
-    font-weight: 500;
-    font-size: 20px;
+.accordion-button{
+    padding: 16px 10px  !important;
 }
+
+.chap-num{
+    width: 48px;
+    height: 48px;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+}
+
+.chap-num p{
+    padding-top: 12px;
+    margin-bottom: 0%;
+}
+
+.chap-name{
+    margin-bottom: 0%;
+}
+
+.accordion-body{
+    padding: 16px 0px !important;
+}
+
+a.exercises{
+    border: 1px solid #b9b9b9;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+
+}
+
+a.exercises p{
+    margin-bottom: 0%;
+}
+
 
 
 
@@ -170,14 +234,27 @@ img.subject-icon{
         margin-top: 24px;
     }
 
+    header{
+        background-position-x: center;
+        background-position-y: center;
+
+    }
+
     p.tamil-display{
         font-size: 24px;
+        padding-top: 130px;
     }
     
     .horizontal{
         flex-direction: column;
     }
 
+
+    /* Chapters */
+
+    .chapters{
+        margin: 120px 16px;
+    }
 
 
 }

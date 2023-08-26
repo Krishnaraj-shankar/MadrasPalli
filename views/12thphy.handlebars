@@ -1,0 +1,52 @@
+{{> nav}}
+
+<div class="chapters">
+    <h3>Class 12 - Physics</h3>
+
+    <br>
+
+    <p class="title-sm">Chapters</p>
+
+    {{#each chapter}}
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{@index}}">
+      <div class="chap-num">
+          <p>{{@index}}</p>
+      </div>
+        <p class="chap-name">{{name}}</p>
+
+        </div>
+
+    <div id="flush-collapse{{@index}}" class="accordion-collapse collapse">
+      <div class="accordion-body">
+        
+          <a class="exercises" href="">
+            <p>Topics & Explanation</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
+          <a class="exercises" href="">
+            <p>Example Problems</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
+          <a class="exercises" href="">
+            <p>Exercise Problems</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+        
+
+        
+    {{/each}}
+        
+        
+</div>
+
+
+
+

@@ -136,15 +136,99 @@ app.get('/about', (req,res) => {
 
 // });
 
-app.get("/subject",(req,res)=>{
-    res.render('subject')
+
+
+// Mathematics
+
+app.get("/10thmath",(req,res)=>{
+    res.render('10thmath', {
+        title: '10th Mathematics',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
         
 })
 
-app.post('/subject', function (req, res) {
-    console.log("data: ",req.body);
-  res.send('welcome, ' + req.body)
+app.get("/11thmath",(req,res)=>{
+    res.render('11thmath', {
+        layout: 'index',
+        title: '11th Mathematics',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
 })
+
+app.get("/12thmath",(req,res)=>{
+    res.render('12thmath', {
+        layout: 'index',
+        title: '12th Mathematics',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+
+// Physics
+
+app.get("/11thphy",(req,res)=>{
+    res.render('11thphy', {
+        layout: 'index',
+        title: '11th Physics',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+app.get("/12thphy",(req,res)=>{
+    res.render('12thphy', {
+        layout: 'index',
+        title: '12th Physics',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+
+
 
 
 
