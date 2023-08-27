@@ -1,7 +1,7 @@
 {{> nav}}
 
 <div class="chapters">
-    <h3>Class 11 - Mathematics</h3>
+    <h3>Class 10 - Science</h3>
 
     <br>
 
@@ -22,15 +22,18 @@
     </div>
     <div id="flush-collapse{{@index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
-        {{#each exercise}}
-          <p class="exercises" href="">
-            <a href="">Exercise {{this}}</a>  
-            <span>|</span>         
-            <a href="">Examples</a>           
-
-          </p>
-
-        {{/each}}
+        <a class="non-math-exercises" href="">
+            <p>Topics & Explanation</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
+          <a class="non-math-exercises" href="">
+            <p>Example Problems</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
+          <a class="non-math-exercises" href="">
+            <p>Exercise Problems</p>     
+            <img src="/images/chevron-r.svg" alt="arrow-right">
+          </a>
 
       </div>
     </div>
@@ -46,10 +49,3 @@
         
         
 </div>
-
-
-
-
-
-
-

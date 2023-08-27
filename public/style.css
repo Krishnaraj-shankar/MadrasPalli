@@ -12,11 +12,33 @@ nav{
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
+.navbar-toggler{
+    transition: all .2s ease-in-out;
+
+}
+
 .navbar-toggler:focus,
 .navbar-toggler:active,
 .navbar-toggler-icon:focus {
-    outline: none;
-    box-shadow: none;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-toggler.collapsed .fa-bars {
+
+    display: inline-block;
+}
+
+.navbar-toggler.collapsed .fa-times {
+    display: none;
+}
+  
+.navbar-toggler:not(.collapsed) .fa-bars {
+    display: none;
+}
+
+.navbar-toggler:not(.collapsed) .fa-times {
+    display: inline-block;
 }
 
 .bg{
@@ -202,21 +224,38 @@ img.subject-icon{
     padding: 16px 0px !important;
 }
 
-a.exercises{
+p.exercises{
     border: 1px solid #b9b9b9;
     border-radius: 4px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+p.exercises a{
+    margin-bottom: 0%;
+    text-decoration: none;
     padding: 12px;
+}
+
+p.exercises span{
+    padding-top: 12px;
+}
+
+a.non-math-exercises{
+    border: 1px solid #b9b9b9;
+    border-radius: 4px;
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     text-decoration: none;
-
 }
 
-a.exercises p{
+a.non-math-exercises p{
     margin-bottom: 0%;
+    padding: 12px;
 }
-
 
 
 
@@ -225,8 +264,8 @@ a.exercises p{
     nav{
         font-weight: 500;
         padding: 16px 16px !important;
-        border-radius: 1000px;
-        margin: 16px 16px;
+        border-radius: 0px !important;
+        margin: 0px;
     }
 
     .navbar-nav{

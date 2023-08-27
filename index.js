@@ -138,7 +138,7 @@ app.get('/about', (req,res) => {
 
 
 
-// Mathematics
+// Mathematics - 10, 11, 12
 
 app.get("/10thmath",(req,res)=>{
     res.render('10thmath', {
@@ -191,7 +191,7 @@ app.get("/12thmath",(req,res)=>{
 })
 
 
-// Physics
+// Physics - 11, 12
 
 app.get("/11thphy",(req,res)=>{
     res.render('11thphy', {
@@ -227,6 +227,80 @@ app.get("/12thphy",(req,res)=>{
         
 })
 
+
+
+//Chemistry - 11, 12
+
+app.get("/12thchem",(req,res)=>{
+    res.render('12thchem', {
+        layout: 'index',
+        title: '12th Chemistry',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+app.get("/11thchem",(req,res)=>{
+    res.render('11thchem', {
+        layout: 'index',
+        title: '11th Chemistry',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+
+//10th Science, Social
+
+app.get("/10thScience",(req,res)=>{
+    res.render('10thscience', {
+        layout: 'index',
+        title: '10th Science',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
+
+app.get("/10thSocial",(req,res)=>{
+    res.render('10thsocial', {
+        layout: 'index',
+        title: '10th Social',
+        chapter: [{
+            name: "Sets",
+            exercise: [1,2,3,]
+        },
+        {
+            name: "Calculus",
+            exercise: [1,2,3,4,5,6]
+        },
+    ]
+    })
+        
+})
 
 
 

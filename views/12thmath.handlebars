@@ -9,8 +9,9 @@
 
     {{#each chapter}}
 
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+      <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
+    <div class="accordion-header">
       <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{@index}}">
       <div class="chap-num">
           <p>{{@index}}</p>
@@ -18,23 +19,26 @@
         <p class="chap-name">{{name}}</p>
 
         </div>
-
-    <div id="flush-collapse{{@index}}" class="accordion-collapse collapse">
+    </div>
+    <div id="flush-collapse{{@index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
         {{#each exercise}}
-          <a class="exercises" href="">
-            <p>Exercise {{this}} with examples</p>           
-              
-            <img src="/images/chevron-r.svg" alt="arrow-right">
+          <p class="exercises" href="">
+            <a href="">Exercise {{this}}</a>  
+            <span>|</span>         
+            <a href="">Examples</a>           
 
-          </a>
+          </p>
 
         {{/each}}
+
       </div>
     </div>
   </div>
-  </div>
+  
+</div>
 
+        
         
 
         
@@ -42,6 +46,9 @@
         
         
 </div>
+
+
+
 
 
 
