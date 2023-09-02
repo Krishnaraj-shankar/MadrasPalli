@@ -1,2 +1,5 @@
-node_modules/
-package.json
+node_modules
+package-lock.json
+.gitignore
+.env
+.DS_Store
