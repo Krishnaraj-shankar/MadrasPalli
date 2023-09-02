@@ -5,7 +5,7 @@ const client = new Client({
     host:'localhost',
     user:'postgres',
     port:5432,
-    password:"admin",
+    password:"root",
     database:"madrasPalli"
 })
 
@@ -59,7 +59,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
 //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-res.render('main', {layout : 'index'});
+res.render('template', {layout : 'index'});
 });
 
 // app.get('/', (req, res) => {
