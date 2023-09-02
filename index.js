@@ -151,15 +151,40 @@ app.get('/login', (req,res) => {
 app.get("/10thmath",(req,res)=>{
     res.render('10thmath', {
         title: '10th Mathematics',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: [
+            {
+              name: "Relations and Functions",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            },
+            {
+              name: "Numbers and Sequences",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            },
+            {
+              name: "Algebra",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            },
+            {
+              name: "Geometry",
+              exercise: [1, 2, 3, 4, 5, 6]
+            },
+            {
+              name: "Coordinate Geometry",
+              exercise: [1, 2, 3, 4, 5, 6]
+            },
+            {
+              name: "Trigonometry",
+              exercise: [1, 2, 3]
+            },
+            {
+              name: "Mensuration",
+              exercise: [1, 2, 3, 4, 5]
+            },
+            {
+              name: "Statistics and Probability",
+              exercise: [1, 2, 3, 4, 5, 6]
+            }
+          ]
     })
         
 })
@@ -168,15 +193,56 @@ app.get("/11thmath",(req,res)=>{
     res.render('11thmath', {
         layout: 'index',
         title: '11th Mathematics',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: [
+            {
+              name: "Sets, Relations and Functions",
+              exercise: [1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+              name: "Basic Algebra",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            },
+            {
+              name: "Trigonometry",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            },
+            {
+              name: "Combinatorics and Mathematical Induction",
+              exercise: [1, 2, 3, 4, 5, 6]
+            },
+            {
+              name: "Binomial Theorem, Sequences and Series",
+              exercise: [1, 2, 3, 4, 5, 6]
+            },
+            {
+              name: "Two Dimensional Analytical Geometry",
+              exercise: [1, 2, 3, 4, 5]
+            },
+            {
+              name: "Matrices and Determinants",
+              exercise: [1, 2, 3]
+            },
+            {
+              name: "Vector Algebra",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            {
+              name: "Differential Calculus - Limits and Continuity",
+              exercise: [1, 2, 3]
+            },
+            {
+              name: "Differential Calculus - Differentiability and Methods of Differentiation",
+              exercise: [1, 2, 3, 4]
+            },
+            {
+              name: "Integral Calculus",
+              exercise: [1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+              name: "Introduction to probability\xa0theory",
+              exercise: [1, 2, 3, 4, 5, 6, 7, 8]
+            }
+          ]
     })
         
 })
@@ -186,14 +252,53 @@ app.get("/12thmath",(req,res)=>{
         layout: 'index',
         title: '12th Mathematics',
         chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+            "name": "Applications of Matrices and Determinants",
+            "exercise": [1, 2, 3, 4, 5]
+          },
+          {
+            "name": "Complex Numbers",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8]
+          },
+          {
+            "name": "Theory of Equations",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+          },
+          {
+            "name": "Inverse Trigonometric Functions",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          {
+            "name": "Two Dimensional Analytical Geometry-II",
+            "exercise": [1, 2, 3, 4, 5, 6, 7]
+          },
+          {
+            "name": "Applications of Vector Algebra",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          {
+            "name": "Applications of Differential Calculus",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          {
+            "name": "Differentials and Partial Derivatives",
+            "exercise": [1, 2, 3, 4, 5, 6]
+          },
+          {
+            "name": "Applications of Integration",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+          },
+          {
+            "name": "Ordinary Differential Equations",
+            "exercise": [1, 2, 3, 4, 5, 6, 7, 8]
+          },
+          {
+            "name": "Probability Distributions",
+            "exercise": [1, 2, 3, 4, 5, 6]
+          },
+          {
+            "name": "Discrete Mathematics",
+            "exercise": [1, 2, 3]
+          }]
     })
         
 })
@@ -205,15 +310,7 @@ app.get("/11thphy",(req,res)=>{
     res.render('11thphy', {
         layout: 'index',
         title: '11th Physics',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: ["Nature of Physical World and Measurement", "Kinematics", "Laws of Motion", "Work, Energy and Power", "Motion of System of Particles and Rigid Bodies", "Gravitation", "Properties of Matter", "Heat and Thermodynamics", "Kinetic Theory of Gases", "Oscillations", "Waves"]
     })
         
 })
@@ -222,15 +319,7 @@ app.get("/12thphy",(req,res)=>{
     res.render('12thphy', {
         layout: 'index',
         title: '12th Physics',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: ["Electrostatics", "Current Electricity", "Magnetism and magnetic effects of electric current", "Electromagnetic Induction And Alternating Current", "Electromagnetic waves", "Ray Optics", "Wave Optics", "Dual Nature of Radiation and Matter", "Atomic and Nuclear physics", "Electronics and Communication", "Recent Developments in Physics"]
     })
         
 })
@@ -243,15 +332,8 @@ app.get("/12thchem",(req,res)=>{
     res.render('12thchem', {
         layout: 'index',
         title: '12th Chemistry',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: ["Metallurgy", "p-Block Elements-I", "p-Block Elements - II", "Transition and Inner Transition Elements", "Coordination Chemistry", "Solid State", "Chemical Kinetics", "Ionic Equilibrium", "Electro Chemistry", "Surface Chemistry", "Hydroxy Compounds and Ethers", "Carbonyl Compounds and Carboxylic Acids", "Organic Nitrogen Compounds", "Biomolecules", "Chemistry in Everyday Life"]
+
     })
         
 })
@@ -260,15 +342,7 @@ app.get("/11thchem",(req,res)=>{
     res.render('11thchem', {
         layout: 'index',
         title: '11th Chemistry',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: ["Basic Concepts of Chemistry and Chemical Calculations", "Quantum Mechanical Model of Atom", "Periodic Classification Of Elements", "Hydrogen", "Alkali and Alkaline Earth Metals", "Gaseous State", "Thermodynamics", "Physical and Chemical Equilibrium", "Solutions", "Chemical Bonding", "Fundamentals of Organic Chemistry", "Fundamentals of Organic Chemistry", "Hydrocarbons", "Haloalkanes and Haloarenes", "Environmental Chemistry"]
     })
         
 })
@@ -280,15 +354,7 @@ app.get("/10thScience",(req,res)=>{
     res.render('10thscience', {
         layout: 'index',
         title: '10th Science',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        chapter: ["Laws of Motion", "Optics", "Thermal Physics", "Electricity", "Acoustics", "Nuclear Physics", "Atoms and Molecules", "Periodic Classification of Elements", "Solutions", "Types of Chemical Reactions", "Carbon and its Compounds", "Plant Anatomy and Plant Physiology"]
     })
         
 })
@@ -297,15 +363,22 @@ app.get("/10thSocial",(req,res)=>{
     res.render('10thsocial', {
         layout: 'index',
         title: '10th Social',
-        chapter: [{
-            name: "Sets",
-            exercise: [1,2,3,]
-        },
-        {
-            name: "Calculus",
-            exercise: [1,2,3,4,5,6]
-        },
-    ]
+        sub: [{
+            name: "History",
+            chaps: ["Outbreak of World War I and Its Aftermath", "The World between two World Wars", "World war II", "The World after World War II", "Social and Religious Reform Movements in the 19th Century", "Early Revolts against British Rule in Tamil Nadu", "Anti-Colonial Movements and the Birth of Nationalism", "Nationalism: Gandhian Phase", "Freedom Struggle in Tamil Nadu", "Social Transformation in Tamil Nadu"]
+            },
+            {
+            name: "Geography",
+            chaps: ["India - Location, Relief and Drainage", "Climate and Natural Vegetation of India", "India - Agriculture", "India - Resources and Industries", "India - Population, Transport, Communication and Trade", "Physical Geography of Tamil Nadu", "Human Geography of Tamil Nadu"]
+            },
+            {
+            name: "Civics",
+            chaps: ["Indian Constitution", "Central Government", "State Government", "India’s Foreign Policy", "India’s International Relations"]
+            },
+            {
+            name: "Economics",
+            chaps: ["Gross Domestic Product and its Growth: an Introduction", "Globalization and Trade", "Food Security and Nutrition", "Government and Taxes", "Industrial Clusters in Tamil Nadu"]
+            }]
     })
         
 })
@@ -335,3 +408,7 @@ app.post("/maths_10th",(req,res)=>{
 
 
 // {/* <iframe width="1022" height="575" src="https://www.youtube.com/embed/_n-Ai30C1qs" title="How to Connect Node js to PostgreSQL Database and Fetch data" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
+
+
+
+
