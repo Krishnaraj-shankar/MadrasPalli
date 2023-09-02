@@ -259,6 +259,45 @@ a.non-math-exercises p{
 
 
 
+/* Login */
+
+.login{
+    background-image: url('images/bg-login.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box{
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 24px;
+    width: fit-content;
+    text-align: center;
+}
+
+.login-box img.logo{
+    margin-bottom: 24px;
+}
+
+.login-box button{
+    background-color: black;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: none;
+    margin-top: 32px;
+}
+
+.login-box button img{
+    margin-right: 16px;
+}
+
+
+
 @media only screen and (max-width: 600px) {
 
     nav{

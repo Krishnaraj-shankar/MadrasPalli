@@ -5,7 +5,7 @@ const client = new Client({
     host:'localhost',
     user:'postgres',
     port:5432,
-    password:"root",
+    password:"admin",
     database:"madrasPalli"
 })
 
@@ -72,6 +72,14 @@ app.get('/about', (req,res) => {
         title: 'About us',
     });
 });
+
+app.get('/login', (req,res) => {
+    res.render('login', {
+        title: 'Login',
+    });
+});
+
+
 
 
 
