@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handlebars Example</title>
+</head>
+<body>
+    <div id="output"></div>
+
+    <!-- Include Handlebars library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+    <!-- Define the Handlebars template -->
+    <script id="your-template-id" type="text/x-handlebars-template">
+        <div>
+            {{#each subjects}}
+                <p>{{@key}}</p>
+                <ul>
+                    {{#eachRange 1 this}}
+                        <li>{{this}}</li>
+                    {{/eachRange}}
+                </ul>
+            {{/each}}
+        </div>
+    </script>
+
+    <!-- JavaScript code to render the template -->
+    <script>
+        // Define the custom Handlebars helper
+        Handlebars.registerHelper('eachRange', function (start, end, options) {
+            let result = '';
+            for (let i = start; i <= end; i++) {
+                result += options.fn(i);
+            }
+            return result;
+        });
+
+        // Your data object
+        const data = {
+            subjects: {
+                "Relations and Functions": 10,
+                "Numbers and Sequences": 11,
+                "Algebra": 9,
+                "Geometry": 6,
+                "Coordinate Geometry": 6,
+                "Trigonometry": 3,
+                "Mensuration": 5,
+                "Statistics and Probability": 6
+            }
+        };
+
+        // Compile the Handlebars template
+        const source = document.getElementById('your-template-id').innerHTML;
+        const template = Handlebars.compile(source);
+
+        // Render the template with data and insert it into the output element
+        const html = template(data);
+        document.getElementById('output').innerHTML = html;
+    </script>
+</body>
+</html>

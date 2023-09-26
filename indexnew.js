@@ -1,5 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const { Client } = require("pg");
+const session = require("express-session");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+require("./auth");
 
 const client = new Client({
   host: "localhost",
@@ -25,6 +31,7 @@ client.connect();
 // })
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 //Loads the handlebars module
@@ -49,9 +56,75 @@ app.use(express.json());
 // Use built-in middleware to parse URL-encoded request bodies
 app.use(express.urlencoded({ extended: true }));
 
+//newly added
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+function isLoggedIn(req, res, next) {
+  // req.user ? next() : res.redirect("/login");
+  // res.render('login')
+  if (req.user) {
+    console.log("req.user", req.user);
+    next();
+  } else if (req.headers.authorization) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) res.render("login");
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+      // console.log(err)
+      if (err) return res.render("login");
+      console.log("user: ", user);
+      req.user = user;
+      next();
+    });
+    // console.log({"req.headers.authorization" : req.headers.authorization});
+    // console.log("here we should authenticate with jwt.verify");
+    // next();
+  } else {
+    res.render("login");
+  }
+}
+//ended
+
 app.get("/", (req, res) => {
   //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-  res.render("template", { layout: "index" });
+
+  //newly added
+  if (req.user) {
+    console.log("req.user.accessTokenJWT: ", req.user.accessTokenJWT);
+    res.render("main", {
+      layout: "index",
+      accessTokenJWT: req.user.accessTokenJWT,
+    });
+  } else {
+    res.render("template", { layout: "index" });
+  }
+  //ended
+});
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+app.get(
+  "/api/sessions/oauth/google",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/auth/google/failure",
+  })
+);
+
+app.get("/auth/google/failure", (req, res) => {
+  console.log("authentication failed");
+  res.render("login", { authenticationStatus: "failed" });
 });
 
 // app.get('/', (req, res) => {
@@ -59,16 +132,21 @@ app.get("/", (req, res) => {
 // res.render('main', {layout: 'index'});
 // });
 
-app.get("/about", (req, res) => {
+app.get("/login", (req, res) => {
+  res.render("login", {
+    title: "Login",
+  });
+});
+
+//about us route
+app.get("/about", isLoggedIn, (req, res) => {
   res.render("about", {
     title: "About us",
   });
 });
 
-app.get("/login", (req, res) => {
-  res.render("login", {
-    title: "Login",
-  });
+app.get("/videos", (req, res) => {
+  res.render("video", { title: "video" });
 });
 
 // app.get('/subject', async (req,res) => {
@@ -125,7 +203,7 @@ app.get("/login", (req, res) => {
 
 // Mathematics - 10, 11, 12
 
-app.get("/10thmath", (req, res) => {
+app.get("/10thmath", isLoggedIn, (req, res) => {
   res.render("10thmath", {
     title: "10th Mathematics",
     chapter: [
@@ -165,7 +243,7 @@ app.get("/10thmath", (req, res) => {
   });
 });
 
-app.get("/11thmath", (req, res) => {
+app.get("/11thmath", isLoggedIn, (req, res) => {
   res.render("11thmath", {
     layout: "index",
     title: "11th Mathematics",
@@ -222,7 +300,7 @@ app.get("/11thmath", (req, res) => {
   });
 });
 
-app.get("/12thmath", (req, res) => {
+app.get("/12thmath", isLoggedIn, (req, res) => {
   res.render("12thmath", {
     layout: "index",
     title: "12th Mathematics",
@@ -281,7 +359,7 @@ app.get("/12thmath", (req, res) => {
 
 // Physics - 11, 12
 
-app.get("/11thphy", (req, res) => {
+app.get("/11thphy", isLoggedIn, (req, res) => {
   res.render("11thphy", {
     layout: "index",
     title: "11th Physics",
@@ -301,7 +379,7 @@ app.get("/11thphy", (req, res) => {
   });
 });
 
-app.get("/12thphy", (req, res) => {
+app.get("/12thphy", isLoggedIn, (req, res) => {
   res.render("12thphy", {
     layout: "index",
     title: "12th Physics",
@@ -323,7 +401,7 @@ app.get("/12thphy", (req, res) => {
 
 //Chemistry - 11, 12
 
-app.get("/12thchem", (req, res) => {
+app.get("/12thchem", isLoggedIn, (req, res) => {
   res.render("12thchem", {
     layout: "index",
     title: "12th Chemistry",
@@ -347,7 +425,7 @@ app.get("/12thchem", (req, res) => {
   });
 });
 
-app.get("/11thchem", (req, res) => {
+app.get("/11thchem", isLoggedIn, (req, res) => {
   res.render("11thchem", {
     layout: "index",
     title: "11th Chemistry",
@@ -373,7 +451,7 @@ app.get("/11thchem", (req, res) => {
 
 //10th Science, Social
 
-app.get("/10thScience", (req, res) => {
+app.get("/10thScience", isLoggedIn, (req, res) => {
   res.render("10thscience", {
     layout: "index",
     title: "10th Science",
@@ -394,7 +472,7 @@ app.get("/10thScience", (req, res) => {
   });
 });
 
-app.get("/10thSocial", (req, res) => {
+app.get("/10thSocial", isLoggedIn, (req, res) => {
   res.render("10thsocial", {
     layout: "index",
     title: "10th Social",
@@ -450,14 +528,10 @@ app.get("/10thSocial", (req, res) => {
   });
 });
 
-app.get("/video", (req, res) => {
-  res.render("video", { title: "video" });
-});
-
 app.listen(port, () => console.log(`App listening to port ${port}`));
 
 //example for database
-app.post("/maths_10th", (req, res) => {
+app.post("/maths_10th", isLoggedIn, (req, res) => {
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
   let chapter = req.body.chapter;
   let exercise = req.body.exercise;
