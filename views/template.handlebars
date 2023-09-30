@@ -5,6 +5,22 @@
 {{> header}}
 
 <div class="boxes">
+    {{#if accessTokenJWT}}
+        <script>
+            console.log("{{accessTokenJWT}}");
+            localStorage.setItem("daeb2y5p8", "{{accessTokenJWT}}");
+        </script>
+    {{/if}}
+     {{#if userName}}
+        <script>
+            console.log("{{userName}}");
+        </script>
+    {{/if}}
+     {{#if userEmail}}
+        <script>
+            console.log("{{userEmail}}");
+        </script>
+    {{/if}}
 
     <div class="card-container">
         <div class="horizontal">
@@ -26,10 +42,10 @@
                     <div class="collapse" id="collapse1">
                         <div class="card card-body">
                             <p class="title-sm">Subjects</p>
-                            <ul class="subjects">
-                                <li><a href=""><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</a></li>
-                                <li><a href=""><img src="./images/vessel.svg" class="subject-icon" alt="">Science</a></li>
-                                <li><a href=""><img src="./images/computer.svg" class="subject-icon" alt="">Social Science</a></li>
+                            <ul class="subjects" data-id="xjarqseut10">
+                                <li><button><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</button></li>
+                                <li><button><img src="./images/vessel.svg" class="subject-icon" alt="">Science</button></li>
+                                <li><button><img src="./images/computer.svg" class="subject-icon" alt="">Social Science</button></li>
 
                             </ul>
                         </div>
@@ -52,12 +68,12 @@
                     </p>
                     <div class="collapse" id="collapse2">
                         <div class="card card-body">
-                            <ul class="subjects">
-                                <li><a href=""><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</a></li>
-                                <li><a href=""><img src="./images/brain.svg" class="subject-icon" alt="">Biology</a></li>
-                                <li><a href=""><img src="./images/atom.svg" class="subject-icon" alt="">Physics</a></li>
-                                <li><a href=""><img src="./images/vessel.svg" class="subject-icon" alt="">Chemistry</a></li>
-                                <li><a href=""><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</a></li>
+                            <ul class="subjects" data-id="xjarqseut11">
+                                <li><button><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</button></li>
+                                <li><button><img src="./images/brain.svg" class="subject-icon" alt="">Biology</button></li>
+                                <li><button><img src="./images/atom.svg" class="subject-icon" alt="">Physics</button></li>
+                                <li><button><img src="./images/vessel.svg" class="subject-icon" alt="">Chemistry</button></li>
+                                <li><button><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</button></li>
 
                             </ul>
                             
@@ -81,12 +97,12 @@
                     </p>
                     <div class="collapse" id="collapse3">
                         <div class="card card-body">
-                            <ul class="subjects">
-                                <li><a href=""><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</a></li>
-                                <li><a href=""><img src="./images/brain.svg" class="subject-icon" alt="">Biology</a></li>
-                                <li><a href=""><img src="./images/atom.svg" class="subject-icon" alt="">Physics</a></li>
-                                <li><a href=""><img src="./images/vessel.svg" class="subject-icon" alt="">Chemistry</a></li>
-                                <li><a href=""><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</a></li>
+                            <ul class="subjects" data-id="xjarqseut12">
+                                <li><button><img src="./images/compass.svg" class="subject-icon" alt="">Mathematics</button></li>
+                                <li><button><img src="./images/brain.svg" class="subject-icon" alt="">Biology</button></li>
+                                <li><button><img src="./images/atom.svg" class="subject-icon" alt="">Physics</button></li>
+                                <li><button><img src="./images/vessel.svg" class="subject-icon" alt="">Chemistry</button></li>
+                                <li><button><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</button></li>
 
                             </ul>
                             
