@@ -1,11 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const { Client } = require('pg');
+const session = require('express-session');
+const passport = require('passport');
+const jwt = require('jsonwebtoken')
+const cors = require('cors');
+require('./auth');
 
 const client = new Client({
     host:'localhost',
     user:'postgres',
     port:5432,
-    password:"admin",
+    password:"root",
     database:"madrasPalli"
 })
 
@@ -27,6 +34,7 @@ client.connect();
 
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 
@@ -43,111 +51,121 @@ partialsDir: __dirname + '/views/partials/',
 }));
 app.use(express.static('public'))
 
+
+
 // Use built-in middleware to parse JSON request bodies
 app.use(express.json());
 
 // Use built-in middleware to parse URL-encoded request bodies
 app.use(express.urlencoded({ extended: true }));
 
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+function isLoggedIn(req, res, next) {
+    // req.user ? next() : res.redirect("/login");
+    // res.render('login')
+    if(req.user){
+      console.log("req.user",req.user);
+      next();
+    } else if(req.headers.authorization) {
+
+      const authHeader = req.headers['authorization']
+      const token = authHeader && authHeader.split(' ')[1]
+      if (token == null) res.render('login');
+    
+      jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+        // console.log(err)
+        if (err) return res.render('login');
+        console.log("user: ",user);
+        req.user = user;
+        next()
+      })
+
+        // console.log({"req.headers.authorization" : req.headers.authorization});
+        // console.log("here we should authenticate with jwt.verify");
+        // next();
+    } else {
+      res.render('login');
+    }
+  }
+
+app.get("/main", isLoggedIn, (req,res)=>{
+    res.render('main');
+})
 
 
 
-
-
-
-
-
-app.get('/', (req, res) => {
+app.get('/',(req, res) => {
 //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-res.render('main', {layout : 'index'});
+// if(req.user){
+//     console.log("req.user.accessTokenJWT" , req.user.accessTokenJWT);
+//     res.render('main',{accessTokenJWT : req.user.accessTokenJWT});
+//   } else {
+//     console.log("I'm home");
+//     res.send("Not to be printed inside '/' route ");
+//   }
+
+// if(req.user){
+//   console.log("req.user from '/' : ",req.user);
+//   res.render('main')
+// }
+
+if(req.user){
+  console.log("req.user.accessTokenJWT: ",req.user.accessTokenJWT);
+  res.render('main',{accessTokenJWT : req.user.accessTokenJWT});
+}
+else{
+  res.render('main');
+}
+// res.render('main', {layout : 'index'});
 });
 
-// app.get('/', (req, res) => {
-// //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-// res.render('main', {layout: 'index'});
-// });
 
-app.get('/about', (req,res) => {
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
+));
+
+app.get( '/api/sessions/oauth/google',
+  passport.authenticate( 'google', {
+    successRedirect: '/',
+    failureRedirect: '/auth/google/failure'
+  })
+);
+
+
+app.get('/auth/google/failure', (req, res) => {
+  console.log("authentication failed");
+    res.render('login');
+  });
+
+app.get('/about',isLoggedIn , (req,res) => {
     res.render('about', {
         title: 'About us',
     });
 });
 
 
+app.get('/login', (req,res)=>{
+    res.render('login');
+})
 
 
-
-// app.get('/subject', async (req,res) => { 
-
-//     let data = () =>{
-//         client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
-//             if(!err){
-//                 console.log("outuput: ",res.rows);
-//                 return res.rows
-//             } 
-//             else console.log("err: ",err.message);
-//             client.end();
-//         })
-//     }
-
-
-
-//     res.render('subject', {
-//         layout : 'index',
-//         title: 'Subject',
-//         data: await data()
-//     });
-// });
-
-
-// app.get('/subject', (req,res) => { 
-
-//     const chapterNum = req.query.chapterNum;
-
-//     function fetchData() {
-//         return new Promise((resolve, reject) => {
-//             client.query(`SELECT id FROM maths_10th WHERE (chapter_no = 1 AND exercise_no = 2 AND problem_no = 2)`, (err, result) => {
-//                 if (err) {
-//                     reject(err);
-//                 } else {
-//                     console.log(result.rows)
-//                     resolve(result.rows);
-//                 }
-//             });
-//         });
-//     }
-
-//     fetchData()
-//         .then(rows => {
-//             res.render('subject', {
-//                 layout: 'index',
-//                 title: 'Subject',
-//                 data: JSON.stringify(rows)
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error:', error.message);
-//             res.status(500).send('An error occurred');
-//         });
-
-
-
-
-
-// });
-
-app.get("/subject",(req,res)=>{
+app.get("/subject",isLoggedIn ,(req,res)=>{
     res.render('subject')
         
 })
 
-app.post('/subject', function (req, res) {
+app.post('/subject',isLoggedIn , function (req, res) {
     console.log("data: ",req.body);
   res.send('welcome, ' + req.body)
 })
 
-
-
+app.get('/10th/physics', isLoggedIn, function(req,res){
+  res.render('physics10th');
+})
 
 
 app.listen(port, () => console.log(`App listening to port ${port}`));
@@ -156,16 +174,3 @@ app.listen(port, () => console.log(`App listening to port ${port}`));
 
 
 
-
-//example for database
-app.post("/maths_10th",(req,res)=>{
-    //in request you should give (chapter, exercise or example that may be boolean, problem_number);
-    let chapter = req.body.chapter;
-    let exercise = req.body.exercise;
-    // client.query(`select youtube_link from maths_10th where (chapter=${chapter} and exercise=${exercise} and problem_number=${problem_number}`)
-})
-
-
-
-
-// {/* <iframe width="1022" height="575" src="https://www.youtube.com/embed/_n-Ai30C1qs" title="How to Connect Node js to PostgreSQL Database and Fetch data" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}

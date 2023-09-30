@@ -8,12 +8,15 @@
     </div>
 
 
-
-
 </header>
 
-<div class="boxes">
-
+<div id="boxes">
+        {{#if accessTokenJWT}}
+                    <script>
+                        console.log("{{accessTokenJWT}}");
+                        localStorage.setItem("oauth", "{{accessTokenJWT}}");
+                    </script>
+        {{/if}}
     <div class="card-container">
         <div class="horizontal">
 
@@ -35,11 +38,13 @@
                         <div class="card card-body">
                             <p class="title-sm">Subjects</p>
                             <ul class="subjects">
-                                <li><a href=""><img src="./images/brain.svg" class="subject-icon" alt="">Biology</a></li>
-                                <li><a href=""><img src="./images/atom.svg" class="subject-icon" alt="">Physics</a></li>
+                                {{!-- <li><a href=""><img src="./images/brain.svg" class="subject-icon" alt="">Biology</a></li>
+                                <li><a href="/10th/physics"><img src="./images/atom.svg" class="subject-icon" alt="">Physics</a></li>
                                 <li><a href=""><img src="./images/vessel.svg" class="subject-icon" alt="">Chemistry</a></li>
-                                <li><a href=""><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</a></li>
-
+                                <li><a href=""><img src="./images/computer.svg" class="subject-icon" alt="">Computer Science</a></li> --}}
+                                <li><button id="btn1">Physics</button></li>
+                                <li><button id="btn2">Chemistry</button></li>
+                                <li><button id="btn3">Maths</button></li>
                             </ul>
                         </div>
                     </div>
@@ -88,18 +93,34 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <script>
+        document.getElementById("btn1").addEventListener('click',function(){
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/10th/physics', true);
+            let token = localStorage.getItem('oauth');
+            console.log("token ",token);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            token ? xhr.setRequestHeader('Authorization', `Bearer ${token}`) : null;
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        document.getElementById("boxes").innerHTML = '';
+                        document.getElementById("boxes").innerHTML = xhr.responseText;
+                    } else {
+                    console.log('Error:');
+                    }
+                }
+            };
+            xhr.send();
+        })
+    </script>
 
     </div>
     
-
-    </div>
-    
-
-
-    </div>
+    {{!-- </div>
 
 </div>
-</div>
+</div> --}}
 
 {{> footer}}
