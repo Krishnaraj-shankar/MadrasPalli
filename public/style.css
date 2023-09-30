@@ -41,6 +41,14 @@ nav{
     display: inline-block;
 }
 
+.nav-link.user-name{
+    background-color: rgb(243, 243, 243);
+    margin-left: 16px;
+    padding: 8px 24px !important;
+    border-radius: 100px;
+    color: #000;
+}
+
 .bg{
     background-color: #fff !important;
 }
@@ -96,7 +104,6 @@ p.class-info{
     display: flex;
     flex-direction: row;
     gap: 16px;
-
 }
 
 .card-container{
@@ -144,15 +151,18 @@ ul.subjects{
 ul.subjects li{
     padding: 16px;
     transition: all .2s ease;
-
+    
 }
 
 ul.subjects li:hover{
+    cursor: pointer;
     background-color: aliceblue;
 }
 
-ul.subjects li a{
-    text-decoration: none;
+ul.subjects li button{
+    background-color: transparent;
+    outline: none;
+    border: none;
     font-weight: 500;
 }
 
@@ -280,20 +290,56 @@ a.non-math-exercises p{
 }
 
 .login-box img.logo{
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
 }
 
 .login-box button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-top: 40px;
+}
+
+.login-box button a{
     background-color: black;
-    color: #fff;
+    color: #fff !important;
     padding: 12px 24px;
     border-radius: 4px;
     border: none;
-    margin-top: 32px;
+    text-decoration: none;
+    margin-top: 32px !important;
+    transition: all .2s ease-in-out;
 }
 
-.login-box button img{
+.login-box button a img{
     margin-right: 16px;
+}
+
+.login-box button a:hover{
+    background-color: #111;
+}
+
+
+
+
+/* Video */
+
+.ques-n-videos{
+    margin: 120px 32px;
+    padding: 32px 16px;
+    background-color: #fff;
+    border-radius: 8px !important;
+
+}
+
+.em-video{
+    border-bottom: 2px solid #000000;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.ques-img{
+    margin-bottom: 16px;
 }
 
 
@@ -310,6 +356,10 @@ a.non-math-exercises p{
     .navbar-nav{
         text-align: center;
         margin-top: 24px;
+    }
+
+    .nav-link.user-name{
+        
     }
 
     header{
@@ -334,13 +384,40 @@ a.non-math-exercises p{
         margin: 120px 0px;
         border-radius: 0px !important;
     }
-
+    
     .all-chap{
         gap: 16px;
     }
-
+    
     .chap-name{
         max-width: 200px;
+    }
+    
+    
+    /* Video */
+    
+    .ques-n-videos{
+        margin: 0px;
+        padding: 120px 0px;
+        
+    }
+
+    .em-video p{
+        font-weight: 500;
+    }
+
+    .em-video p, .ques-img{
+        padding: 0px 16px;
+    }
+
+    .ques-img img{
+        width: 100% !important;
+    }
+
+
+    iframe{
+        width: 100%;
+        height: 200px;
     }
 
 }
