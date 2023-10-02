@@ -7,28 +7,38 @@
 
     <p class="title-sm">Chapters</p>
 
+    {{#if userName}}
+        <script>
+            console.log("{{userName}}");
+        </script>
+    {{/if}}
+     {{#if userEmail}}
+        <script>
+            console.log("{{userEmail}}");
+        </script>
+    {{/if}}
+
     {{#each chapter}}
 
       <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
     <div class="accordion-header">
-      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{@index}}">
+      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{addOne @index}}">
       <div class="chap-num">
-          <p>{{@index}}</p>
+          <p>{{addOne @index}}</p>
       </div>
         <p class="chap-name">{{name}}</p>
 
         </div>
     </div>
-    <div id="flush-collapse{{@index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+    <div id="flush-collapse{{addOne @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
         {{#each exercise}}
-          <p class="exercises" href="">
-            <a href="">Exercise {{this}}</a>  
+          <div class="exercises" data-id=`{{addOne @index}}-{{this}}` data-id1="event10">
+            <p>Exercise {{this}}</p>  
             <span>|</span>         
-            <a href="">Examples</a>           
-
-          </p>
+            <p>Examples</p>           
+          </div>
 
         {{/each}}
 
@@ -43,7 +53,17 @@
 
         
     {{/each}}
-        
+        <script>
+      console.log("yes");
+      let eventtriger = document.querySelectorAll('[data-id1="event10"]');
+
+      eventtriger.forEach((element) => {
+        element.addEventListener("click", (event) => {
+          debugger;
+          console.log(event.target);
+        });
+      });
+    </script>
         
 </div>
 

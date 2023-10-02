@@ -1,14 +1,5 @@
-require("dotenv").config();
 const express = require("express");
 const { Client } = require("pg");
-const session = require("express-session");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
-const cors = require("cors");
-const { engine } = require("express-handlebars");
-const fs = require("fs");
-const cookieParser = require("cookie-parser");
-require("./auth");
 
 const client = new Client({
   host: "localhost",
@@ -33,13 +24,14 @@ client.connect();
 //     client.end();
 // })
 
-const port = 3000;
 const app = express();
-app.use(cors());
-app.use(cookieParser());
+const port = 3000;
 
+//Loads the handlebars module
+const { engine } = require("express-handlebars");
+// const client = require('pg/lib/native/client');
+//Sets our app to use the handlebars engine
 app.set("view engine", "handlebars");
-
 //Sets handlebars configurations (we will go through them later on)
 app.engine(
   "handlebars",
@@ -47,11 +39,6 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     defaultLayout: "index",
     partialsDir: __dirname + "/views/partials/",
-    helpers: {
-      addOne: function (value) {
-        return value + 1;
-      },
-    },
   })
 );
 app.use(express.static("public"));
@@ -62,91 +49,26 @@ app.use(express.json());
 // Use built-in middleware to parse URL-encoded request bodies
 app.use(express.urlencoded({ extended: true }));
 
-//newly added
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-function isLoggedIn(req, res, next) {
-  if (req.user) {
-    req.user.displayName = req.user.displayName;
-    console.log("req.user", req.user);
-    next();
-  } else if (req.cookies["daeb2y5p8"]) {
-    let token = req.cookies["daeb2y5p8"];
-
-    // const authHeader = req.headers["authorization"];
-    // const token = authHeader && authHeader.split(" ")[1];
-    if (token == null) res.render("login");
-
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-      if (err) return res.render("login");
-      console.log("user: ", user);
-      req.user = user;
-      next();
-    });
-  } else {
-    res.render("login");
-  }
-}
-
-app.get("/", isLoggedIn, (req, res) => {
-  if (req.user) {
-    console.log(
-      "req.user.accessTokenJWT from root route: ",
-      req.user.accessTokenJWT,
-      req.user.displayName,
-      req.user.email
-    );
-    res.render("template", {
-      title: "index",
-      accessTokenJWT: req.user.accessTokenJWT,
-      userName: req.user.displayName,
-      userEmail: req.user.email,
-    });
-  } else {
-    res.render("template", { title: "index", header: true });
-  }
+app.get("/", (req, res) => {
+  //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
+  res.render("template", { layout: "index" });
 });
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+// app.get('/', (req, res) => {
+// //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
+// res.render('main', {layout: 'index'});
+// });
 
-app.get(
-  "/api/sessions/oauth/google",
-  passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/auth/google/failure",
-  })
-);
-
-app.get("/auth/google/failure", (req, res) => {
-  console.log("authentication failed");
-  res.render("login", { authenticationStatus: "failed" });
+app.get("/about", (req, res) => {
+  res.render("about", {
+    title: "About us",
+  });
 });
 
 app.get("/login", (req, res) => {
   res.render("login", {
     title: "Login",
   });
-});
-
-app.get("/about", isLoggedIn, (req, res) => {
-  res.render("about", {
-    title: "About us",
-  });
-});
-
-app.get("/videos", (req, res) => {
-  res.render("video", { title: "video" });
 });
 
 // app.get('/subject', async (req,res) => {
@@ -201,60 +123,9 @@ app.get("/videos", (req, res) => {
 
 // });
 
-app.get("/demo", (req, res) => {
-  console.log("loggedIn /10thmath");
-  debugger;
-  // console.log("10th: ", req.user.displayName);
-  let fileContent = fs.readFileSync(
-    "/Users/krishna-17258/Personal/MadrasPalli/MadrasPalli/views/demo.handlebars",
-    "utf-8"
-  );
-  res.json({
-    fileContent: fileContent,
-    title: "demo Mathematics",
-    chapter: [
-      {
-        name: "Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      },
-      {
-        name: "Numbers and Sequences",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      },
-      {
-        name: "Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      },
-      {
-        name: "Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Coordinate Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Trigonometry",
-        exercise: [1, 2, 3],
-      },
-      {
-        name: "Mensuration",
-        exercise: [1, 2, 3, 4, 5],
-      },
-      {
-        name: "Statistics and Probability",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-    ],
-  });
-});
-
 // Mathematics - 10, 11, 12
 
-app.get("/10thmath", isLoggedIn, (req, res) => {
-  console.log("loggedIn /10thmath");
-  debugger;
-  console.log("10th: ", req.user.displayName);
+app.get("/10thmath", (req, res) => {
   res.render("10thmath", {
     title: "10th Mathematics",
     chapter: [
@@ -291,12 +162,10 @@ app.get("/10thmath", isLoggedIn, (req, res) => {
         exercise: [1, 2, 3, 4, 5, 6],
       },
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
-app.get("/11thmath", isLoggedIn, (req, res) => {
+app.get("/11thmath", (req, res) => {
   res.render("11thmath", {
     layout: "index",
     title: "11th Mathematics",
@@ -350,12 +219,10 @@ app.get("/11thmath", isLoggedIn, (req, res) => {
         exercise: [1, 2, 3, 4, 5, 6, 7, 8],
       },
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
-app.get("/12thmath", isLoggedIn, (req, res) => {
+app.get("/12thmath", (req, res) => {
   res.render("12thmath", {
     layout: "index",
     title: "12th Mathematics",
@@ -409,14 +276,12 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
         exercise: [1, 2, 3],
       },
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
 // Physics - 11, 12
 
-app.get("/11thphy", isLoggedIn, (req, res) => {
+app.get("/11thphy", (req, res) => {
   res.render("11thphy", {
     layout: "index",
     title: "11th Physics",
@@ -433,12 +298,10 @@ app.get("/11thphy", isLoggedIn, (req, res) => {
       "Oscillations",
       "Waves",
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
-app.get("/12thphy", isLoggedIn, (req, res) => {
+app.get("/12thphy", (req, res) => {
   res.render("12thphy", {
     layout: "index",
     title: "12th Physics",
@@ -455,14 +318,12 @@ app.get("/12thphy", isLoggedIn, (req, res) => {
       "Electronics and Communication",
       "Recent Developments in Physics",
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
 //Chemistry - 11, 12
 
-app.get("/12thchem", isLoggedIn, (req, res) => {
+app.get("/12thchem", (req, res) => {
   res.render("12thchem", {
     layout: "index",
     title: "12th Chemistry",
@@ -483,12 +344,10 @@ app.get("/12thchem", isLoggedIn, (req, res) => {
       "Biomolecules",
       "Chemistry in Everyday Life",
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
-app.get("/11thchem", isLoggedIn, (req, res) => {
+app.get("/11thchem", (req, res) => {
   res.render("11thchem", {
     layout: "index",
     title: "11th Chemistry",
@@ -509,14 +368,12 @@ app.get("/11thchem", isLoggedIn, (req, res) => {
       "Haloalkanes and Haloarenes",
       "Environmental Chemistry",
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
 //10th Science, Social
 
-app.get("/10thScience", isLoggedIn, (req, res) => {
+app.get("/10thScience", (req, res) => {
   res.render("10thscience", {
     layout: "index",
     title: "10th Science",
@@ -534,12 +391,10 @@ app.get("/10thScience", isLoggedIn, (req, res) => {
       "Carbon and its Compounds",
       "Plant Anatomy and Plant Physiology",
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
 });
 
-app.get("/10thSocial", isLoggedIn, (req, res) => {
+app.get("/10thSocial", (req, res) => {
   res.render("10thsocial", {
     layout: "index",
     title: "10th Social",
@@ -592,15 +447,17 @@ app.get("/10thSocial", isLoggedIn, (req, res) => {
         ],
       },
     ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
   });
+});
+
+app.get("/video", (req, res) => {
+  res.render("video", { title: "video" });
 });
 
 app.listen(port, () => console.log(`App listening to port ${port}`));
 
 //example for database
-app.post("/maths_10th", isLoggedIn, (req, res) => {
+app.post("/maths_10th", (req, res) => {
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
   let chapter = req.body.chapter;
   let exercise = req.body.exercise;

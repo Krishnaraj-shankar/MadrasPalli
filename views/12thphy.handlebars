@@ -11,15 +11,15 @@
 
         <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
-      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{@index}}">
+      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{addOne @index}}">
       <div class="chap-num">
-          <p>{{@index}}</p>
+          <p>{{addOne @index}}</p>
       </div>
         <p class="chap-name">{{this}}</p>
 
         </div>
 
-    <div id="flush-collapse{{@index}}" class="accordion-collapse collapse">
+    <div id="flush-collapse{{addOne @index}}" class="accordion-collapse collapse">
       <div class="accordion-body">
         
           <a class="non-math-exercises" href="">

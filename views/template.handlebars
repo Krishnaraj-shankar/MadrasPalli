@@ -1,14 +1,17 @@
-<div id="container">
     
 {{> nav}}
 
-{{> header}}
+
+
+<div id="container">
+
+    {{> header}}
 
 <div class="boxes">
     {{#if accessTokenJWT}}
         <script>
             console.log("{{accessTokenJWT}}");
-            localStorage.setItem("daeb2y5p8", "{{accessTokenJWT}}");
+            document.cookie = "daeb2y5p8={{accessTokenJWT}}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
         </script>
     {{/if}}
      {{#if userName}}
@@ -125,6 +128,8 @@
 
 </div>
 </div>
+
+<button onclick="demoxml()">demopage</button>
 
 {{> footer}}
 

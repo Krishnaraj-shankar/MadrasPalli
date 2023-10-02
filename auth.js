@@ -18,7 +18,7 @@ passport.use(
     function (request, accessToken, refreshToken, profile, done) {
       console.log("profile: ", profile);
       const accessTokenJWT = jwt.sign(
-        { user: profile.email, name: profile.displayName },
+        { user: profile.email, displayName: profile.displayName },
         process.env.JWT_SECRET_KEY,
         { expiresIn: "700h" }
       );

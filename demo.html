@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div data-id="event12">
+        <p>exercise</p>
+        <p>example</p>
+    </div>
+    <div data-id="event12">
+        <p>exercise</p>
+        <p>example</p>
+    </div>
+    
+    <script>
+        let pk = document.querySelector('[data-id="event12"]');
+        pk.addEventListener('click',(event)=>{
+            debugger;
+            console.log(event.target);
+            debugger;
+        })
+    </script>
+</body>
+</html>

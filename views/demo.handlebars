@@ -1,11 +1,21 @@
-{{> nav}}
 
-<div class="chapters">
-    <h3>Class 10 - Science</h3>
+<div id="chapters" class="chapters">
+    <h3>Class 10 - Mathematics</h3>
 
     <br>
 
     <p class="title-sm">Chapters</p>
+
+    {{#if userName}}
+        <script>
+            console.log("{{userName}}");
+        </script>
+    {{/if}}
+     {{#if userEmail}}
+        <script>
+            console.log("{{userEmail}}");
+        </script>
+    {{/if}}
 
     {{#each chapter}}
 
@@ -16,24 +26,21 @@
       <div class="chap-num">
           <p>{{addOne @index}}</p>
       </div>
-        <p class="chap-name">{{this}}</p>
+        <p class="chap-name">{{name}}</p>
 
         </div>
     </div>
     <div id="flush-collapse{{addOne @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
-        <a class="non-math-exercises" href="">
-            <p>Topics & Explanation</p>     
-            <img src="/images/chevron-r.svg" alt="arrow-right">
-          </a>
-          <a class="non-math-exercises" href="">
-            <p>Example Problems</p>     
-            <img src="/images/chevron-r.svg" alt="arrow-right">
-          </a>
-          <a class="non-math-exercises" href="">
-            <p>Exercise Problems</p>     
-            <img src="/images/chevron-r.svg" alt="arrow-right">
-          </a>
+        {{#each exercise}}
+          <p class="exercises" href="">
+            <a href="">Exercise {{this}}</a>  
+            <span>|</span>         
+            <a href="">Examples</a>           
+
+          </p>
+
+        {{/each}}
 
       </div>
     </div>
