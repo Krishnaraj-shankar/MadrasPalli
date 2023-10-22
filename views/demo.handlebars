@@ -22,26 +22,25 @@
       <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
     <div class="accordion-header">
-      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{addOne @index}}">
+      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{add @index}}">
       <div class="chap-num">
-          <p>{{addOne @index}}</p>
+          <p>{{add @index}}</p>
       </div>
         <p class="chap-name">{{name}}</p>
 
         </div>
     </div>
-    <div id="flush-collapse{{addOne @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+    <div id="flush-collapse{{add @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
         {{#each exercise}}
           <p class="exercises" href="">
-            <a href="">Exercise {{this}}</a>  
+            <p data-id1="event10">Exercise {{this}}</p>  
             <span>|</span>         
-            <a href="">Examples</a>           
+            <p data-id1="event10">Examples</p>           
 
           </p>
 
         {{/each}}
-
       </div>
     </div>
   </div>
@@ -54,5 +53,21 @@
         
     {{/each}}
         
+   
         
 </div>
+
+ <script>
+      console.log("yes");
+      let eventtriger = document.querySelectorAll(
+        '#chapters .accordion-body [data-id1="event10"]'
+      );
+      console.log(eventtriger);
+      eventtriger.forEach((element) => {
+        element.addEventListener("click", (event) => {
+          debugger;
+          console.log(event.target);
+        });
+      });
+
+    </script>

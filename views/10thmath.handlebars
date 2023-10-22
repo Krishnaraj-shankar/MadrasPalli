@@ -1,5 +1,3 @@
-{{> nav}}
-
 <div class="chapters">
     <h3>Class 10 - Mathematics</h3>
 
@@ -19,57 +17,28 @@
     {{/if}}
 
     {{#each chapter}}
-
       <div class="accordion accordion-flush" id="accordionFlushExample">
-  <div class="accordion-item">
-    <div class="accordion-header">
-      <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{addOne @index}}">
-      <div class="chap-num">
-          <p>{{addOne @index}}</p>
-      </div>
-        <p class="chap-name">{{name}}</p>
-
-        </div>
-    </div>
-    <div id="flush-collapse{{addOne @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">
-        {{#each exercise}}
-          <div class="exercises" data-id=`{{addOne @index}}-{{this}}` data-id1="event10">
-            <p>Exercise {{this}}</p>  
-            <span>|</span>         
-            <p>Examples</p>           
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{add @index}}">
+              <div class="chap-num">
+                <p>{{add @index}}</p>
+              </div>
+              <p class="chap-name">{{name}}</p>
+            </div>
           </div>
-
-        {{/each}}
-
+          <div id="flush-collapse{{add @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              {{#each exercise}}
+                <div class="exercises" data-id="{{add @../index}}-{{this}}">
+                  <p data-id1="event10">Exercise {{this}}</p>
+                  <span>|</span>
+                  <p data-id1="event10">Examples</p>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  
-</div>
-
-        
-        
-
-        
     {{/each}}
-        <script>
-      console.log("yes");
-      let eventtriger = document.querySelectorAll('[data-id1="event10"]');
-
-      eventtriger.forEach((element) => {
-        element.addEventListener("click", (event) => {
-          debugger;
-          console.log(event.target);
-        });
-      });
-    </script>
-        
 </div>
-
-
-
-
-
-
-

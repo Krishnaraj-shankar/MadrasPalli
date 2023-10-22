@@ -1,0 +1,24 @@
+
+<div class="ques-n-videos">
+
+    {{#if no_data}}
+
+    <p>No Videos Available</p>
+
+    {{/if}}
+
+    {{#each data}}
+
+        <div class="em-video">
+
+            <p>{{topic}}</p>
+
+
+            <iframe width="560" height="315" src={{youtube_link}} title="YouTube video player" frameborder="0" allow="" allowfullscreen></iframe>
+        </div>
+
+    {{/each}}
+    
+</div>
+
+

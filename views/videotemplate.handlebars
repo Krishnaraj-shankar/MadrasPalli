@@ -1,0 +1,34 @@
+
+<div class="ques-n-videos">
+
+{{#if no_data}}
+
+<p>No Videos Available</p>
+
+{{/if}}
+
+{{#each data}}
+
+    <div class="em-video">
+
+
+
+        <p>{{problem_no}}</p>
+
+        {{#if image}}
+
+        <div class="ques-img">
+            <img src="./images/maths12/${{image}}">
+        </div>
+
+        {{/if}}
+
+        <iframe width="560" height="315" src={{youtube_link}} title="YouTube video player" frameborder="0" allow="" allowfullscreen></iframe>
+    </div>
+
+{{/each}}
+    
+</div>
+
+
+        {{!-- <iframe width="560" height="315" src={{youtube_link}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}

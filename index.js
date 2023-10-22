@@ -47,11 +47,6 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     defaultLayout: "index",
     partialsDir: __dirname + "/views/partials/",
-    helpers: {
-      addOne: function (value) {
-        return value + 1;
-      },
-    },
   })
 );
 app.use(express.static("public"));
@@ -149,113 +144,18 @@ app.get("/videos", (req, res) => {
   res.render("video", { title: "video" });
 });
 
-// app.get('/subject', async (req,res) => {
-
-//     let data = () =>{
-//         client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
-//             if(!err){
-//                 console.log("outuput: ",res.rows);
-//                 return res.rows
-//             }
-//             else console.log("err: ",err.message);
-//             client.end();
-//         })
-//     }
-
-//     res.render('subject', {
-//         layout : 'index',
-//         title: 'Subject',
-//         data: await data()
-//     });
-// });
-
-// app.get('/subject', (req,res) => {
-
-//     const chapterNum = req.query.chapterNum;
-
-//     function fetchData() {
-//         return new Promise((resolve, reject) => {
-//             client.query(`SELECT id FROM maths_10th WHERE (chapter_no = 1 AND exercise_no = 2 AND problem_no = 2)`, (err, result) => {
-//                 if (err) {
-//                     reject(err);
-//                 } else {
-//                     console.log(result.rows)
-//                     resolve(result.rows);
-//                 }
-//             });
-//         });
-//     }
-
-//     fetchData()
-//         .then(rows => {
-//             res.render('subject', {
-//                 layout: 'index',
-//                 title: 'Subject',
-//                 data: JSON.stringify(rows)
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error:', error.message);
-//             res.status(500).send('An error occurred');
-//         });
-
-// });
-
-app.get("/demo", (req, res) => {
-  console.log("loggedIn /10thmath");
-  debugger;
-  // console.log("10th: ", req.user.displayName);
-  let fileContent = fs.readFileSync(
-    "/Users/krishna-17258/Personal/MadrasPalli/MadrasPalli/views/demo.handlebars",
-    "utf-8"
-  );
-  res.json({
-    fileContent: fileContent,
-    title: "demo Mathematics",
-    chapter: [
-      {
-        name: "Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      },
-      {
-        name: "Numbers and Sequences",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      },
-      {
-        name: "Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      },
-      {
-        name: "Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Coordinate Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Trigonometry",
-        exercise: [1, 2, 3],
-      },
-      {
-        name: "Mensuration",
-        exercise: [1, 2, 3, 4, 5],
-      },
-      {
-        name: "Statistics and Probability",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-    ],
-  });
-});
-
 // Mathematics - 10, 11, 12
 
 app.get("/10thmath", isLoggedIn, (req, res) => {
   console.log("loggedIn /10thmath");
   debugger;
   console.log("10th: ", req.user.displayName);
-  res.render("10thmath", {
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thmath.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "10th Mathematics",
     chapter: [
       {
@@ -297,8 +197,12 @@ app.get("/10thmath", isLoggedIn, (req, res) => {
 });
 
 app.get("/11thmath", isLoggedIn, (req, res) => {
-  res.render("11thmath", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thmath.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "11th Mathematics",
     chapter: [
       {
@@ -356,8 +260,12 @@ app.get("/11thmath", isLoggedIn, (req, res) => {
 });
 
 app.get("/12thmath", isLoggedIn, (req, res) => {
-  res.render("12thmath", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thmath.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "12th Mathematics",
     chapter: [
       {
@@ -417,8 +325,12 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
 // Physics - 11, 12
 
 app.get("/11thphy", isLoggedIn, (req, res) => {
-  res.render("11thphy", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thphy.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "11th Physics",
     chapter: [
       "Nature of Physical World and Measurement",
@@ -439,8 +351,12 @@ app.get("/11thphy", isLoggedIn, (req, res) => {
 });
 
 app.get("/12thphy", isLoggedIn, (req, res) => {
-  res.render("12thphy", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thphy.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "12th Physics",
     chapter: [
       "Electrostatics",
@@ -463,8 +379,12 @@ app.get("/12thphy", isLoggedIn, (req, res) => {
 //Chemistry - 11, 12
 
 app.get("/12thchem", isLoggedIn, (req, res) => {
-  res.render("12thchem", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thchem.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "12th Chemistry",
     chapter: [
       "Metallurgy",
@@ -489,8 +409,12 @@ app.get("/12thchem", isLoggedIn, (req, res) => {
 });
 
 app.get("/11thchem", isLoggedIn, (req, res) => {
-  res.render("11thchem", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thchem.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "11th Chemistry",
     chapter: [
       "Basic Concepts of Chemistry and Chemical Calculations",
@@ -517,8 +441,12 @@ app.get("/11thchem", isLoggedIn, (req, res) => {
 //10th Science, Social
 
 app.get("/10thScience", isLoggedIn, (req, res) => {
-  res.render("10thscience", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thscience.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "10th Science",
     chapter: [
       "Laws of Motion",
@@ -540,8 +468,12 @@ app.get("/10thScience", isLoggedIn, (req, res) => {
 });
 
 app.get("/10thSocial", isLoggedIn, (req, res) => {
-  res.render("10thsocial", {
-    layout: "index",
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thsocial.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
     title: "10th Social",
     sub: [
       {
@@ -597,14 +529,257 @@ app.get("/10thSocial", isLoggedIn, (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`App listening to port ${port}`));
+//maps are used for data sanitization from the user to prevent sql injection
+let numberMap = new Map([
+  ["1", "1"],
+  ["2", "2"],
+  ["3", "3"],
+  ["4", "4"],
+  ["5", "5"],
+  ["6", "6"],
+  ["7", "7"],
+  ["8", "8"],
+  ["9", "9"],
+  ["10", "10"],
+  ["11", "11"],
+  ["12", "12"],
+  ["13", "13"],
+  ["14", "14"],
+  ["15", "15"],
+  ["16", "16"],
+  ["17", "17"],
+  ["18", "18"],
+  ["19", "19"],
+  ["20", "20"],
+  ["21", "21"],
+  ["22", "22"],
+  ["23", "23"],
+  ["24", "24"],
+  ["25", "25"],
+]);
+
+let example_exercise_map = new Map([
+  ["Examples", "example_no"],
+  ["Exercise", "exercise_no"],
+]);
 
 //example for database
-app.post("/maths_10th", isLoggedIn, (req, res) => {
+app.post("/10thmath/chapter", isLoggedIn, (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "utf-8"
+  );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
-  let chapter = req.body.chapter;
-  let exercise = req.body.exercise;
-  // client.query(`select youtube_link from maths_10th where (chapter=${chapter} and exercise=${exercise} and problem_number=${problem_number}`)
+  let data = req.body;
+  console.log(data);
+  let chapter = data.chapter_exercise.split("-")[0];
+  chapter = numberMap.get(chapter);
+  let exercise = data.chapter_exercise.split("-")[1];
+  exercise = numberMap.get(exercise);
+  let type = data.type.split(" ")[0];
+  type = example_exercise_map.get(type);
+  console.log("type: ", type, "chapter: ", chapter, "exercise: ", exercise);
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        `SELECT problem_no, youtube_link FROM maths10 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
 });
 
-// {/* <iframe width="1022" height="575" src="https://www.youtube.com/embed/_n-Ai30C1qs" title="How to Connect Node js to PostgreSQL Database and Fetch data" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
+app.post("/11thmath/chapter", isLoggedIn, (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "utf-8"
+  );
+  //in request you should give (chapter, exercise or example that may be boolean, problem_number);
+  let data = req.body;
+  console.log(data);
+  let chapter = data.chapter_exercise.split("-")[0];
+  chapter = numberMap.get(chapter);
+  let exercise = data.chapter_exercise.split("-")[1];
+  exercise = numberMap.get(exercise);
+  let type = data.type.split(" ")[0];
+  type = example_exercise_map.get(type);
+  console.log("type: ", type, "chapter: ", chapter, "exercise: ", exercise);
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        `SELECT problem_no, youtube_link FROM maths11 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+app.post("/12thmath/chapter", isLoggedIn, (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "utf-8"
+  );
+  //in request you should give (chapter, exercise or example that may be boolean, problem_number);
+  let data = req.body;
+  console.log(data);
+  let chapter = data.chapter_exercise.split("-")[0];
+  chapter = numberMap.get(chapter);
+  let exercise = data.chapter_exercise.split("-")[1];
+  exercise = numberMap.get(exercise);
+  let type = data.type.split(" ")[0];
+  type = example_exercise_map.get(type);
+  console.log("type: ", type, "chapter: ", chapter, "exercise: ", exercise);
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        `SELECT problem_no, youtube_link, image FROM maths12 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+//10th social post request
+app.post("/10thsocial/chapter", (req, res) => {
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateSocial.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        `SELECT topic, youtube_link FROM social10 WHERE chapter = ${chapter} order by id asc;`,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+//server starts
+app.listen(port, () => console.log(`App listening to port ${port}`));
+
+//testing purpose
+
+app.get("/demo", (req, res) => {
+  console.log("loggedIn /10thmath");
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/demo.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
+    title: "demo Mathematics",
+    chapter: [
+      {
+        name: "Relations and Functions",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      },
+      {
+        name: "Numbers and Sequences",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      },
+      {
+        name: "Algebra",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      },
+      {
+        name: "Geometry",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+      {
+        name: "Coordinate Geometry",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+      {
+        name: "Trigonometry",
+        exercise: [1, 2, 3],
+      },
+      {
+        name: "Mensuration",
+        exercise: [1, 2, 3, 4, 5],
+      },
+      {
+        name: "Statistics and Probability",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+    ],
+  });
+});
