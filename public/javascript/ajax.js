@@ -70,7 +70,7 @@ ajax.post = (jsonData, url) => {
           let fileContent = json.fileContent;
           const template = Handlebars.compile(fileContent);
           let html;
-          json.data = embedurlParser(json.data);
+          json.data = embedurlParser(json.data,url);
           if (json.data.length == 0) {
             html = template({ data: json.data, no_data: true });
           } else {

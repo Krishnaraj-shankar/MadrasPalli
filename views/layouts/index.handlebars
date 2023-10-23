@@ -27,6 +27,9 @@
         Handlebars.registerHelper('add', function(value) {
             return value + 1;
         });
+         Handlebars.registerHelper('removequote', function(value) {
+            return value.replaceAll("'","");
+        });
     </script>
   </body>
 </html>

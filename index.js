@@ -585,7 +585,7 @@ app.post("/10thmath/chapter", isLoggedIn, (req, res) => {
   function fetchData() {
     return new Promise((resolve, reject) => {
       client.query(
-        `SELECT problem_no, youtube_link FROM maths10 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        `SELECT problem_no, youtube_link, image FROM maths10 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
         (err, result) => {
           if (err) {
             reject(err);
@@ -629,7 +629,7 @@ app.post("/11thmath/chapter", isLoggedIn, (req, res) => {
   function fetchData() {
     return new Promise((resolve, reject) => {
       client.query(
-        `SELECT problem_no, youtube_link FROM maths11 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        `SELECT problem_no, youtube_link, image FROM maths11 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
         (err, result) => {
           if (err) {
             reject(err);

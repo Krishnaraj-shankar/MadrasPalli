@@ -132,10 +132,19 @@ function EventListenerForChemistry(classBelongs) {
   });
 }
 
-function embedurlParser(data) {
+function embedurlParser(data,url) {
   debugger;
   data.forEach((datum, index) => {
     debugger;
+    data[index].image = datum.image.replaceAll("'","");
+    if(url.includes("12thmath")){
+      data[index].image = "maths12/"+data[index].image;
+    } else if(url.includes("10thmath")){
+      data[index].image = "maths10/"+data[index].image;
+    } else if(url.includes("11thmath")){
+      data[index].image = "maths11/"+data[index].image;
+    }
+    data[index].image = data[index].image.replace("png","jpg");
     let youtube_link = datum.youtube_link;
     if (youtube_link.includes("'")) {
       if (youtube_link.includes("https://youtu.be/")) {
