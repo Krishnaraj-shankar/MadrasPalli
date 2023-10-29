@@ -563,8 +563,14 @@ let example_exercise_map = new Map([
   ["Exercise", "exercise_no"],
 ]);
 
+let subTopicMap = new Map([
+  ["Topics & Explanation","topic"],
+  ["Example Problems","isexample_chapter_no"],
+  ["Exercise Problems","isexercise_chapter_no"]
+])
+
 //example for database
-app.post("/10thmath/chapter", isLoggedIn, (req, res) => {
+app.post("/10thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
     "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
@@ -608,7 +614,7 @@ app.post("/10thmath/chapter", isLoggedIn, (req, res) => {
     });
 });
 
-app.post("/11thmath/chapter", isLoggedIn, (req, res) => {
+app.post("/11thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
     "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
@@ -629,7 +635,7 @@ app.post("/11thmath/chapter", isLoggedIn, (req, res) => {
   function fetchData() {
     return new Promise((resolve, reject) => {
       client.query(
-        `SELECT problem_no, youtube_link, image FROM maths11 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        `SELECT problem_no, youtube_link, image, sub_division FROM maths11 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
         (err, result) => {
           if (err) {
             reject(err);
@@ -652,7 +658,7 @@ app.post("/11thmath/chapter", isLoggedIn, (req, res) => {
     });
 });
 
-app.post("/12thmath/chapter", isLoggedIn, (req, res) => {
+app.post("/12thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
     "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
@@ -673,7 +679,7 @@ app.post("/12thmath/chapter", isLoggedIn, (req, res) => {
   function fetchData() {
     return new Promise((resolve, reject) => {
       client.query(
-        `SELECT problem_no, youtube_link, image FROM maths12 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
+        `SELECT problem_no, youtube_link, image, sub_division FROM maths12 WHERE chapter_no = ${chapter} AND ${type} = ${exercise} ORDER BY problem_no ASC;`,
         (err, result) => {
           if (err) {
             reject(err);
@@ -697,7 +703,7 @@ app.post("/12thmath/chapter", isLoggedIn, (req, res) => {
 });
 
 //10th social post request
-app.post("/10thsocial/chapter", (req, res) => {
+app.post("/10thsocialchapter", (req, res) => {
   let fileContent = fs.readFileSync(
     "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateSocial.handlebars",
     "utf-8"
@@ -732,54 +738,254 @@ app.post("/10thsocial/chapter", (req, res) => {
     });
 });
 
+
+app.post("/11thchemchapter", (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+  let type = req.body.type;
+  type = subTopicMap.get(type);
+  let query;
+
+  if(type == "topic"){
+    query = `select topic, youtube_link from chemistry11 where chapter_no = ${chapter} and isexample_chapter_no is null and isexercise_chapter_no is null order by id asc;
+    `;
+  } else if(type == "isexample_chapter_no"){
+    query = `select problem_no, sub_division, youtube_link from chemistry11 where chapter_no = ${chapter} and isexample_chapter_no is not null order by id asc;
+    `;
+  } else if(type == "isexercise_chapter_no"){
+    query = `select problem_no, sub_division, youtube_link from chemistry11 where chapter_no = ${chapter} and isexercise_chapter_no is not null order by id asc;`;
+  }
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        query,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+
+app.post("/12thchemchapter", (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+  let type = req.body.type;
+  type = subTopicMap.get(type);
+  let query;
+
+  if(type == "topic"){
+    query = `select topic, youtube_link from chemistry12 where chapter_no = ${chapter} and isexample_chapter_no is null and isexercise_chapter_no is null order by id asc;
+    `;
+  } else if(type == "isexample_chapter_no"){
+    query = `select problem_no, sub_division, youtube_link from chemistry12 where chapter_no = ${chapter} and isexample_chapter_no is not null order by id asc;
+    `;
+  } else if(type == "isexercise_chapter_no"){
+    query = `select problem_no, sub_division, youtube_link from chemistry12 where chapter_no = ${chapter} and isexercise_chapter_no is not null order by id asc;`;
+  }
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        query,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+
+app.post("/11thphychapter", (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+  let type = req.body.type;
+  type = subTopicMap.get(type);
+  let query;
+
+  if(type == "topic"){
+    query = `select topic, youtube_link from physics11 where chapter = ${chapter} and isexample_chapter_no is null and isexercise_chapter_no is null order by id asc;
+    `;
+  } else if(type == "isexample_chapter_no"){
+    query = `select problem_no, youtube_link from physics11 where chapter = ${chapter} and isexample_chapter_no is not null order by id asc;
+    `;
+  } else if(type == "isexercise_chapter_no"){
+    query = `select problem_no, youtube_link from physics11 where chapter = ${chapter} and isexercise_chapter_no is not null order by id asc;`;
+  }
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        query,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+
+app.post("/12thphychapter", (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+  let type = req.body.type;
+  type = subTopicMap.get(type);
+  let query;
+
+  if(type == "topic"){
+    query = `select topic, youtube_link from physics12 where chapter_no = ${chapter} and example is null and exercise is null order by id asc;
+    `;
+  } else if(type == "isexample_chapter_no"){
+    query = `select problem_no, youtube_link, topic from physics12 where chapter_no = ${chapter} and example is not null order by id asc;`;
+  } else if(type == "isexercise_chapter_no"){
+    query = `select problem_no, youtube_link, topic from physics12 where chapter_no = ${chapter} and exercise is not null order by id asc;
+    ` }
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        query,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+app.post("/10thsciencechapter", (req, res) => {
+  debugger;
+  let fileContent = fs.readFileSync(
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "utf-8"
+  );
+
+  let chapter = req.body.chapter_no;
+  let type = req.body.type;
+  type = subTopicMap.get(type);
+  let query;
+
+  if(type == "topic"){
+    query = `select topic, youtube_link from science10 where unit = ${chapter} and isexample_chapter_no is null and isexercise_chapter_no is null order by id asc;
+    `;
+  } else if(type == "isexample_chapter_no"){
+    query = `select problem_no, youtube_link, topic from science10 where unit = ${chapter} and isexample_chapter_no is not null order by id asc;`;
+  } else if(type == "isexercise_chapter_no"){
+    query = `select problem_no, youtube_link, topic from science10 where unit = ${chapter} and isexercise_chapter_no is not null order by id asc;
+    ` }
+
+  //query
+  function fetchData() {
+    return new Promise((resolve, reject) => {
+      client.query(
+        query,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log(result.rows);
+            resolve(result.rows);
+          }
+        }
+      );
+    });
+  }
+
+  fetchData()
+    .then((rows) => {
+      res.send(JSON.stringify({ data: rows, fileContent: fileContent }));
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred");
+    });
+});
+
+
 //server starts
 app.listen(port, () => console.log(`App listening to port ${port}`));
 
-//testing purpose
-
-app.get("/demo", (req, res) => {
-  console.log("loggedIn /10thmath");
-  debugger;
-  let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/demo.handlebars",
-    "utf-8"
-  );
-  res.json({
-    fileContent: fileContent,
-    title: "demo Mathematics",
-    chapter: [
-      {
-        name: "Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      },
-      {
-        name: "Numbers and Sequences",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      },
-      {
-        name: "Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      },
-      {
-        name: "Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Coordinate Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Trigonometry",
-        exercise: [1, 2, 3],
-      },
-      {
-        name: "Mensuration",
-        exercise: [1, 2, 3, 4, 5],
-      },
-      {
-        name: "Statistics and Probability",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-    ],
-  });
-});

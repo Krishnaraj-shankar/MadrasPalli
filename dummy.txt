@@ -2,3 +2,26 @@
 "Geography" : ["India - Location, Relief and Drainage", "Climate and Natural Vegetation of India", "India - Agriculture", "India - Resources and Industries", "India - Population, Transport, Communication and Trade", "Physical Geography of Tamil Nadu", "Human Geography of Tamil Nadu"],
 "Civics" : ["Indian Constitution", "Central Government", "State Government", "India’s Foreign Policy", "India’s International Relations"],
 "Economics" : ["Gross Domestic Product and its Growth: an Introduction", "Globalization and Trade", "Food Security and Nutrition", "Government and Taxes", "Industrial Clusters in Tamil Nadu"]}
+
+
+
+Handlebars.registerHelper('changeWidth', function(value){
+
+          debugger;
+        let img = new Image();
+
+        img.onload = function() {
+            // The image has loaded, and you can now access its width
+            var width = this.width;
+            console.log("Image width: " + width);
+            let parentId = value;
+            let parentDiv = document.getElementById(parentId);
+            if(window.innerWidth < 420 && width > 200 && width < 300){
+              img.setAttribute('style',`width: ${width}`)
+            }
+            parentDiv.appendChild(img);
+        };
+
+        img.src = './images/' + value;
+          
+        })

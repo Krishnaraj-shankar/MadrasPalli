@@ -12,14 +12,22 @@
     <div class="em-video">
 
 
-
+        {{#if sub_division}}
+        <p>{{problem_no}}. ({{sub_division}})</p>
+        {{else}}
         <p>{{problem_no}}</p>
+        {{/if}}
+
 
         {{#if image}}
 
         <div class="ques-img">
             <img src="./images/{{image}}">
         </div>
+
+        {{!-- <div class="ques-img" id={{image}}>
+            {{changeWidth image}}
+        </div> --}}
 
         {{/if}}
 

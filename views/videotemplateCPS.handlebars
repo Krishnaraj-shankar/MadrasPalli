@@ -11,7 +11,29 @@
 
         <div class="em-video">
 
+            
+
+            {{#if problem_no}}
+
+                {{#if sub_division}}
+
+                    <p>{{problem_no}}. {{sub_division}}</p>
+
+                {{else}}
+
+                    <p>{{problem_no}}</p>
+
+                {{/if}}
+
+            {{/if}}
+
+            {{#if topic}}
+
             <p>{{removeQuote topic}}</p>
+
+            {{/if}}
+
+
 
 
             <iframe width="560" height="315" src={{youtube_link}} title="YouTube video player" frameborder="0" allow="" allowfullscreen></iframe>

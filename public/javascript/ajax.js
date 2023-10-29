@@ -30,10 +30,18 @@ ajax.get = (url) => {
             EventListenerForMaths("event11");
           } else if (url == "/12thmath") {
             EventListenerForMaths("event12");
-          } else if (url == "/10social") {
+          } else if (url == "/10thsocial") {
             EventListenerForSocial("event10");
           } else if (url == "/11thchem") {
-            EventListenerForChemistry("event11");
+            EventListenerForCPS("event11");
+          } else if(url == '/11thphy'){
+            EventListenerForCPS("event11");
+          } else if(url == '/10thscience'){
+            EventListenerForCPS("event10");
+          } else if(url == '/12thchem'){
+            EventListenerForCPS("event12");
+          } else if(url == '/12thphy'){
+            EventListenerForCPS("event12");
           }
         } else {
           throw new error(
@@ -66,6 +74,7 @@ ajax.post = (jsonData, url) => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           // console.log(xhr.responseText);
+          debugger;
           let json = JSON.parse(xhr.responseText);
           let fileContent = json.fileContent;
           const template = Handlebars.compile(fileContent);

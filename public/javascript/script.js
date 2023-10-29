@@ -1,12 +1,12 @@
 window.addEventListener("popstate", (event) => {
   console.log(event.state);
   const currentPath = window.location.pathname;
-  console.log(currentPath);
+  console.log("currentPath: ",currentPath);
   if (currentPath == "/") {
-    window.history.pushState({}, "", currentPath);
+    // window.history.pushState({}, "", currentPath);
     location.href = "/";
   } else {
-    window.history.pushState({}, "", currentPath);
+    // window.history.pushState({}, "", currentPath);
     ajax.get(currentPath);
   }
 });
@@ -26,12 +26,15 @@ let subjectMap = new Map([
   ["Biology", "bio"],
 ]);
 
+
+
 xjarqseut10.addEventListener("click", function (event) {
   let url = getURL(event);
   let chosenClass = "/10th";
   url = `${chosenClass}${url}`;
   console.log(url);
   debugger;
+  console.log("pushed: ",url);
   window.history.pushState({}, "", url);
   ajax.get(url);
 });
@@ -40,7 +43,7 @@ xjarqseut11.addEventListener("click", function (event) {
   let url = getURL(event);
   let chosenClass = "/11th";
   url = `${chosenClass}${url}`;
-  console.log(url);
+  console.log("pushed: ",url);
   window.history.pushState({}, "", url);
   ajax.get(url);
 });
@@ -49,7 +52,7 @@ xjarqseut12.addEventListener("click", function (event) {
   let url = getURL(event);
   let chosenClass = "/12th";
   url = `${chosenClass}${url}`;
-  console.log(url);
+  console.log("pushed: ",url);
   window.history.pushState({}, "", url);
   ajax.get(url);
 });
@@ -82,8 +85,9 @@ function EventListenerForMaths(classBelongs) {
       console.log(event.target);
       console.log(event.target.innerText);
 
-      let newUrl = location.href + "/chapter";
-      // window.history.pushState({}, "", "/chapter");
+      let newUrl = location.href + "chapter";
+      console.log("pushed: ",newUrl);
+      window.history.pushState({}, "", newUrl);
 
       ajax.post(
         {
@@ -102,7 +106,7 @@ function EventListenerForSocial(classBelongs) {
     element.addEventListener("click", (event) => {
       debugger;
       let dataIdValue = event.target.parentElement.attributes[1].value;
-      let newUrl = location.href + "/chapter";
+      let newUrl = location.href + "chapter";
       let chapterCategory = dataIdValue.split("-")[0];
       let chapter_no = dataIdValue.split("-")[1];
       if (chapterCategory == "Geography") {
@@ -112,6 +116,8 @@ function EventListenerForSocial(classBelongs) {
       } else if (chapterCategory == "Economics") {
         chapter_no = Number(chapter_no) + 22;
       }
+      console.log("pushed: ",newUrl);
+      window.history.pushState({}, "", newUrl);
       ajax.post(
         {
           chapter_no: chapter_no,
@@ -122,12 +128,24 @@ function EventListenerForSocial(classBelongs) {
   });
 }
 
-function EventListenerForChemistry(classBelongs) {
+function EventListenerForCPS(classBelongs) {
   let eventtriger = document.querySelectorAll("[data-id1]");
   eventtriger.forEach((element) => {
     element.addEventListener("click", (event) => {
       debugger;
       let element = event.target;
+      let type = element.innerText;
+      let chapter = element.getAttribute("data-id1");
+      let newUrl = location.href + "chapter";
+      console.log("pushed: ",newUrl);
+      window.history.pushState({}, "", newUrl);
+      ajax.post(
+        {
+          chapter_no: chapter,
+          type: type
+        },
+        newUrl
+      );
     });
   });
 }
@@ -136,15 +154,19 @@ function embedurlParser(data,url) {
   debugger;
   data.forEach((datum, index) => {
     debugger;
-    data[index].image = datum.image.replaceAll("'","");
-    if(url.includes("12thmath")){
-      data[index].image = "maths12/"+data[index].image;
-    } else if(url.includes("10thmath")){
-      data[index].image = "maths10/"+data[index].image;
-    } else if(url.includes("11thmath")){
-      data[index].image = "maths11/"+data[index].image;
+    if(data[index].image != null){
+      data[index].image = datum.image.replaceAll("'","");
+      if(!data[index].image.includes(".png")){
+        data[index].image += ".png";
+      }
+      if(url.includes("12thmath")){
+        data[index].image = "maths12/"+data[index].image;
+      } else if(url.includes("10thmath")){
+        data[index].image = "maths10/"+data[index].image;
+      } else if(url.includes("11thmath")){
+        data[index].image = "maths11/"+data[index].image;
+      }
     }
-    data[index].image = data[index].image.replace("png","jpg");
     let youtube_link = datum.youtube_link;
     if (youtube_link.includes("'")) {
       if (youtube_link.includes("https://youtu.be/")) {

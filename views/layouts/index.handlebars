@@ -27,9 +27,29 @@
         Handlebars.registerHelper('add', function(value) {
             return value + 1;
         });
-         Handlebars.registerHelper('removequote', function(value) {
+         Handlebars.registerHelper('removeQuote', function(value) {
             return value.replaceAll("'","");
         });
+        Handlebars.registerHelper('changeWidth', function(value){
+
+          debugger;
+        let img = new Image();
+
+        img.onload = function() {
+            // The image has loaded, and you can now access its width
+            var width = this.width;
+            console.log("Image width: " + width);
+            let parentId = value;
+            let parentDiv = document.getElementById(parentId);
+            if(window.innerWidth < 420 && width > 200 && width < 300){
+              img.setAttribute('style',`width: ${width}`)
+            }
+            parentDiv.appendChild(img);
+        };
+
+        img.src = './images/' + value;
+          
+        })
     </script>
   </body>
 </html>
