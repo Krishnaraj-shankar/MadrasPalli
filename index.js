@@ -8,6 +8,7 @@ const cors = require("cors");
 const { engine } = require("express-handlebars");
 const fs = require("fs");
 const cookieParser = require("cookie-parser");
+const busboy = require('connect-busboy');
 require("./auth");
 
 const client = new Client({
@@ -36,6 +37,7 @@ client.connect();
 const port = 3000;
 const app = express();
 app.use(cors());
+app.use(busboy());
 app.use(cookieParser());
 
 app.set("view engine", "handlebars");
@@ -47,6 +49,15 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     defaultLayout: "index",
     partialsDir: __dirname + "/views/partials/",
+    helpers: {
+      add: function(value) {
+        return value + 1;
+      },
+      removeQuote: function(value) {
+        return value.replaceAll("'", "");
+      },
+      // Add any other custom helpers here
+    }
   })
 );
 app.use(express.static("public"));
@@ -147,53 +158,96 @@ app.get("/videos", (req, res) => {
 // Mathematics - 10, 11, 12
 
 app.get("/10thmath", isLoggedIn, (req, res) => {
-  console.log("loggedIn /10thmath");
-  debugger;
-  console.log("10th: ", req.user.displayName);
-  let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thmath.handlebars",
-    "utf-8"
-  );
-  res.json({
-    fileContent: fileContent,
-    title: "10th Mathematics",
-    chapter: [
-      {
-        name: "Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      },
-      {
-        name: "Numbers and Sequences",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-      },
-      {
-        name: "Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      },
-      {
-        name: "Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Coordinate Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-      {
-        name: "Trigonometry",
-        exercise: [1, 2, 3],
-      },
-      {
-        name: "Mensuration",
-        exercise: [1, 2, 3, 4, 5],
-      },
-      {
-        name: "Statistics and Probability",
-        exercise: [1, 2, 3, 4, 5, 6],
-      },
-    ],
-    userName: req.user.displayName,
-    userEmail: req.user.user,
-  });
+  if(!req.headers['x-requested-with'] === 'XMLHttpRequest'){
+    console.log("it's normal get request")
+    res.render('10thmath',{
+      title: "10th Mathematics",
+      chapter: [
+        {
+          name: "Relations and Functions",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        {
+          name: "Numbers and Sequences",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        },
+        {
+          name: "Algebra",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        },
+        {
+          name: "Geometry",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+        {
+          name: "Coordinate Geometry",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+        {
+          name: "Trigonometry",
+          exercise: [1, 2, 3],
+        },
+        {
+          name: "Mensuration",
+          exercise: [1, 2, 3, 4, 5],
+        },
+        {
+          name: "Statistics and Probability",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+      ],
+      userName: req.user.displayName,
+      userEmail: req.user.user,
+    })
+  } else {
+    console.log("It's ajax request");
+    debugger;
+    console.log("10th: ", req.user.displayName);
+    let fileContent = fs.readFileSync(
+      "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thmath.handlebars",
+      "utf-8"
+    );
+    res.json({
+      fileContent: fileContent,
+      title: "10th Mathematics",
+      chapter: [
+        {
+          name: "Relations and Functions",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        {
+          name: "Numbers and Sequences",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        },
+        {
+          name: "Algebra",
+          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        },
+        {
+          name: "Geometry",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+        {
+          name: "Coordinate Geometry",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+        {
+          name: "Trigonometry",
+          exercise: [1, 2, 3],
+        },
+        {
+          name: "Mensuration",
+          exercise: [1, 2, 3, 4, 5],
+        },
+        {
+          name: "Statistics and Probability",
+          exercise: [1, 2, 3, 4, 5, 6],
+        },
+      ],
+      userName: req.user.displayName,
+      userEmail: req.user.user,
+    });
+  }
 });
 
 app.get("/11thmath", isLoggedIn, (req, res) => {

@@ -6,13 +6,13 @@ ajax.get = (url) => {
     xhr.open("GET", url, true);
     // let token = localStorage.getItem("daeb2y5p8");
     // console.log("token ", token);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader("Content-Type", "application/json");
     // token ? xhr.setRequestHeader("Authorization", `Bearer ${token}`) : null;
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          debugger;
           let json = JSON.parse(xhr.responseText);
           let fileContent = json.fileContent;
           const template = Handlebars.compile(fileContent);
@@ -61,7 +61,6 @@ ajax.get = (url) => {
 
 ajax.post = (jsonData, url) => {
   // Create a new XMLHttpRequest object
-  debugger;
   try {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -74,7 +73,6 @@ ajax.post = (jsonData, url) => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           // console.log(xhr.responseText);
-          debugger;
           let json = JSON.parse(xhr.responseText);
           let fileContent = json.fileContent;
           const template = Handlebars.compile(fileContent);
