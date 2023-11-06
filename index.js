@@ -8,14 +8,13 @@ const cors = require("cors");
 const { engine } = require("express-handlebars");
 const fs = require("fs");
 const cookieParser = require("cookie-parser");
-const busboy = require('connect-busboy');
 require("./auth");
 
 const client = new Client({
   host: "localhost",
   user: "postgres",
   port: 5432,
-  password: "root",
+  password: "admin",
   database: "madrasPalli",
 });
 
@@ -37,7 +36,6 @@ client.connect();
 const port = 3000;
 const app = express();
 app.use(cors());
-app.use(busboy());
 app.use(cookieParser());
 
 app.set("view engine", "handlebars");
@@ -49,15 +47,6 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     defaultLayout: "index",
     partialsDir: __dirname + "/views/partials/",
-    helpers: {
-      add: function(value) {
-        return value + 1;
-      },
-      removeQuote: function(value) {
-        return value.replaceAll("'", "");
-      },
-      // Add any other custom helpers here
-    }
   })
 );
 app.use(express.static("public"));
@@ -158,101 +147,58 @@ app.get("/videos", (req, res) => {
 // Mathematics - 10, 11, 12
 
 app.get("/10thmath", isLoggedIn, (req, res) => {
-  if(!req.headers['x-requested-with'] === 'XMLHttpRequest'){
-    console.log("it's normal get request")
-    res.render('10thmath',{
-      title: "10th Mathematics",
-      chapter: [
-        {
-          name: "Relations and Functions",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        },
-        {
-          name: "Numbers and Sequences",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        },
-        {
-          name: "Algebra",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        },
-        {
-          name: "Geometry",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-        {
-          name: "Coordinate Geometry",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-        {
-          name: "Trigonometry",
-          exercise: [1, 2, 3],
-        },
-        {
-          name: "Mensuration",
-          exercise: [1, 2, 3, 4, 5],
-        },
-        {
-          name: "Statistics and Probability",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-      ],
-      userName: req.user.displayName,
-      userEmail: req.user.user,
-    })
-  } else {
-    console.log("It's ajax request");
-    debugger;
-    console.log("10th: ", req.user.displayName);
-    let fileContent = fs.readFileSync(
-      "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thmath.handlebars",
-      "utf-8"
-    );
-    res.json({
-      fileContent: fileContent,
-      title: "10th Mathematics",
-      chapter: [
-        {
-          name: "Relations and Functions",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        },
-        {
-          name: "Numbers and Sequences",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        },
-        {
-          name: "Algebra",
-          exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        },
-        {
-          name: "Geometry",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-        {
-          name: "Coordinate Geometry",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-        {
-          name: "Trigonometry",
-          exercise: [1, 2, 3],
-        },
-        {
-          name: "Mensuration",
-          exercise: [1, 2, 3, 4, 5],
-        },
-        {
-          name: "Statistics and Probability",
-          exercise: [1, 2, 3, 4, 5, 6],
-        },
-      ],
-      userName: req.user.displayName,
-      userEmail: req.user.user,
-    });
-  }
+  console.log("loggedIn /10thmath");
+  debugger;
+  console.log("10th: ", req.user.displayName);
+  let fileContent = fs.readFileSync(
+    "C:/Users/Admin/Downloads/MadrasPalli/views/10thmath.handlebars",
+    "utf-8"
+  );
+  res.json({
+    fileContent: fileContent,
+    title: "10th Mathematics",
+    chapter: [
+      {
+        name: "Relations and Functions",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      },
+      {
+        name: "Numbers and Sequences",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+      },
+      {
+        name: "Algebra",
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      },
+      {
+        name: "Geometry",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+      {
+        name: "Coordinate Geometry",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+      {
+        name: "Trigonometry",
+        exercise: [1, 2, 3],
+      },
+      {
+        name: "Mensuration",
+        exercise: [1, 2, 3, 4, 5],
+      },
+      {
+        name: "Statistics and Probability",
+        exercise: [1, 2, 3, 4, 5, 6],
+      },
+    ],
+    userName: req.user.displayName,
+    userEmail: req.user.user,
+  });
 });
 
 app.get("/11thmath", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thmath.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/11thmath.handlebars",
     "utf-8"
   );
   res.json({
@@ -315,7 +261,7 @@ app.get("/11thmath", isLoggedIn, (req, res) => {
 
 app.get("/12thmath", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thmath.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/12thmath.handlebars",
     "utf-8"
   );
   res.json({
@@ -380,7 +326,7 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
 
 app.get("/11thphy", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thphy.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/11thphy.handlebars",
     "utf-8"
   );
   res.json({
@@ -406,7 +352,7 @@ app.get("/11thphy", isLoggedIn, (req, res) => {
 
 app.get("/12thphy", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thphy.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/12thphy.handlebars",
     "utf-8"
   );
   res.json({
@@ -434,7 +380,7 @@ app.get("/12thphy", isLoggedIn, (req, res) => {
 
 app.get("/12thchem", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thchem.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/12thchem.handlebars",
     "utf-8"
   );
   res.json({
@@ -464,7 +410,7 @@ app.get("/12thchem", isLoggedIn, (req, res) => {
 
 app.get("/11thchem", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thchem.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/11thchem.handlebars",
     "utf-8"
   );
   res.json({
@@ -496,7 +442,7 @@ app.get("/11thchem", isLoggedIn, (req, res) => {
 
 app.get("/10thScience", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thscience.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/10thscience.handlebars",
     "utf-8"
   );
   res.json({
@@ -523,7 +469,7 @@ app.get("/10thScience", isLoggedIn, (req, res) => {
 
 app.get("/10thSocial", isLoggedIn, (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thsocial.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/10thsocial.handlebars",
     "utf-8"
   );
   res.json({
@@ -627,7 +573,7 @@ let subTopicMap = new Map([
 app.post("/10thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -671,7 +617,7 @@ app.post("/10thmathchapter", isLoggedIn, (req, res) => {
 app.post("/11thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -715,7 +661,7 @@ app.post("/11thmathchapter", isLoggedIn, (req, res) => {
 app.post("/12thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -759,7 +705,7 @@ app.post("/12thmathchapter", isLoggedIn, (req, res) => {
 //10th social post request
 app.post("/10thsocialchapter", (req, res) => {
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateSocial.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateSocial.handlebars",
     "utf-8"
   );
 
@@ -796,7 +742,7 @@ app.post("/10thsocialchapter", (req, res) => {
 app.post("/11thchemchapter", (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -846,7 +792,7 @@ app.post("/11thchemchapter", (req, res) => {
 app.post("/12thchemchapter", (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -896,7 +842,7 @@ app.post("/12thchemchapter", (req, res) => {
 app.post("/11thphychapter", (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -946,7 +892,7 @@ app.post("/11thphychapter", (req, res) => {
 app.post("/12thphychapter", (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -994,7 +940,7 @@ app.post("/12thphychapter", (req, res) => {
 app.post("/10thsciencechapter", (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
+    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
