@@ -57,7 +57,7 @@ nav{
 header{
     background-image: url('images/bg-illus.png') !important;
     background-size: cover;
-    height: 100vh;
+    height: 90vh;
 
 }
 
@@ -301,6 +301,7 @@ img.subject-icon{
     text-decoration: none;
     padding: 12px;
     color: rgb(9, 150, 206);
+    cursor: pointer;
 }
 
 .exercises span{
@@ -320,6 +321,7 @@ img.subject-icon{
     margin-bottom: 0%;
     padding: 12px;
     color: rgb(9, 150, 206);
+    cursor: pointer;
 }
 
 

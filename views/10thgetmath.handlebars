@@ -1,0 +1,57 @@
+    
+{{> nav}}
+
+
+
+<div id="container">
+
+    {{> header}}
+
+
+<div class="chapters">
+    <h3>Class 10 - Mathematics</h3>
+
+    <br>
+
+    <p class="title-sm">Chapters</p>
+
+    {{#if userName}}
+        <script>
+            console.log("{{userName}}");
+        </script>
+    {{/if}}
+     {{#if userEmail}}
+        <script>
+            console.log("{{userEmail}}");
+        </script>
+    {{/if}}
+
+    {{#each chapter}}
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <div class="all-chap accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{add @index}}">
+              <div class="chap-num">
+                <p>{{add @index}}</p>
+              </div>
+              <p class="chap-name">{{name}}</p>
+            </div>
+          </div>
+          <div id="flush-collapse{{add @index}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              {{#each exercise}}
+                <div class="exercises" data-id="{{add @../index}}-{{this}}">
+                  <p data-id1="event10">Exercise {{this}}</p>
+                  <span>|</span>
+                  <p data-id1="event10">Examples</p>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+</div>
+
+
+</div>

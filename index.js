@@ -10,15 +10,29 @@ const fs = require("fs");
 const cookieParser = require("cookie-parser");
 require("./auth");
 
-const client = new Client({
-  host: "localhost",
-  user: "postgres",
-  port: 5432,
-  password: "admin",
-  database: "madrasPalli",
+// const client = new Client({
+//   host: "localhost",
+//   user: "postgres",
+//   port: 5432,
+//   password: "root",
+//   database: "madrasPalli",
+// });
+
+var client= new Client({
+  host:"madraspalli.postgres.database.azure.com",
+  user:"madrasPalli_username",
+  password:"Krishnaraj$%21",
+  database:"madrasPalli",
+  port:5432,
+  ssl:true
 });
 
-client.connect();
+try{
+  client.connect();
+} catch(e){
+  console.log("error while connecting to the database")
+}
+
 
 // client.query(`select youtube_link from maths_10th where (chapter_no=1 and exercise_no=2 and problem_no=2)`,(err,res)=>{
 //     if(!err) console.log("outuput: ",res.rows);
@@ -33,7 +47,7 @@ client.connect();
 //     client.end();
 // })
 
-const port = 3000;
+const port = 8080;
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -47,7 +61,13 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     defaultLayout: "index",
     partialsDir: __dirname + "/views/partials/",
-  })
+    helpers: {
+      // Define your custom helper here
+      add: function(value) {
+        return value + 1;
+      }
+  }
+}),
 );
 app.use(express.static("public"));
 
@@ -87,11 +107,19 @@ function isLoggedIn(req, res, next) {
       next();
     });
   } else {
-    res.render("login");
+    // res.render("login");
+    let fileContent = fs.readFileSync(
+      "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/login.handlebars",
+      "utf-8"
+    );
+    res.json({
+      fileContent:fileContent,
+      title: "login"
+    })
   }
 }
 
-app.get("/", isLoggedIn, (req, res) => {
+app.get("/", (req, res) => {
   if (req.user) {
     console.log(
       "req.user.accessTokenJWT from root route: ",
@@ -147,11 +175,14 @@ app.get("/videos", (req, res) => {
 // Mathematics - 10, 11, 12
 
 app.get("/10thmath", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   console.log("loggedIn /10thmath");
   debugger;
   console.log("10th: ", req.user.displayName);
   let fileContent = fs.readFileSync(
-    "C:/Users/Admin/Downloads/MadrasPalli/views/10thmath.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thmath.handlebars",
     "utf-8"
   );
   res.json({
@@ -160,27 +191,27 @@ app.get("/10thmath", isLoggedIn, (req, res) => {
     chapter: [
       {
         name: "Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        exercise: [1, 2, 3, 4, 5, 6],
       },
       {
         name: "Numbers and Sequences",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
       {
         name: "Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
       },
       {
         name: "Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Coordinate Geometry",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Trigonometry",
-        exercise: [1, 2, 3],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Mensuration",
@@ -188,17 +219,21 @@ app.get("/10thmath", isLoggedIn, (req, res) => {
       },
       {
         name: "Statistics and Probability",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5],
       },
     ],
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 app.get("/11thmath", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/11thmath.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thmath.handlebars",
     "utf-8"
   );
   res.json({
@@ -207,23 +242,23 @@ app.get("/11thmath", isLoggedIn, (req, res) => {
     chapter: [
       {
         name: "Sets, Relations and Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Basic Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
       },
       {
         name: "Trigonometry",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       },
       {
         name: "Combinatorics and Mathematical Induction",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Binomial Theorem, Sequences and Series",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Two Dimensional Analytical Geometry",
@@ -231,37 +266,41 @@ app.get("/11thmath", isLoggedIn, (req, res) => {
       },
       {
         name: "Matrices and Determinants",
-        exercise: [1, 2, 3],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Vector Algebra",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Differential Calculus - Limits and Continuity",
-        exercise: [1, 2, 3],
+        exercise: [1, 2, 3, 4, 5, 6],
       },
       {
         name: "Differential Calculus - Differentiability and Methods of Differentiation",
-        exercise: [1, 2, 3, 4],
+        exercise: [1, 2, 3, 4, 5],
       },
       {
         name: "Integral Calculus",
-        exercise: [1, 2, 3, 4, 5, 6, 7],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
       },
       {
-        name: "Introduction to probability\xa0theory",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8],
+        name: "Introduction to probability theory",
+        exercise: [1, 2, 3, 4, 5],
       },
     ],
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 app.get("/12thmath", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/12thmath.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thmath.handlebars",
     "utf-8"
   );
   res.json({
@@ -270,23 +309,23 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
     chapter: [
       {
         name: "Applications of Matrices and Determinants",
-        exercise: [1, 2, 3, 4, 5],
-      },
-      {
-        name: "Complex Numbers",
         exercise: [1, 2, 3, 4, 5, 6, 7, 8],
       },
       {
-        name: "Theory of Equations",
+        name: "Complex Numbers",
         exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       },
       {
+        name: "Theory of Equations",
+        exercise: [1, 2, 3, 4, 5, 6, 7],
+      },
+      {
         name: "Inverse Trigonometric Functions",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        exercise: [1, 2, 3, 4, 5, 6],
       },
       {
         name: "Two Dimensional Analytical Geometry-II",
-        exercise: [1, 2, 3, 4, 5, 6, 7],
+        exercise: [1, 2, 3, 4, 5, 6],
       },
       {
         name: "Applications of Vector Algebra",
@@ -298,15 +337,15 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
       },
       {
         name: "Differentials and Partial Derivatives",
-        exercise: [1, 2, 3, 4, 5, 6],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8],
       },
       {
         name: "Applications of Integration",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
       {
         name: "Ordinary Differential Equations",
-        exercise: [1, 2, 3, 4, 5, 6, 7, 8],
+        exercise: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       },
       {
         name: "Probability Distributions",
@@ -320,13 +359,17 @@ app.get("/12thmath", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 // Physics - 11, 12
 
 app.get("/11thphy", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/11thphy.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thphy.handlebars",
     "utf-8"
   );
   res.json({
@@ -348,11 +391,15 @@ app.get("/11thphy", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 app.get("/12thphy", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/12thphy.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thphy.handlebars",
     "utf-8"
   );
   res.json({
@@ -374,13 +421,17 @@ app.get("/12thphy", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 //Chemistry - 11, 12
 
 app.get("/12thchem", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/12thchem.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/12thchem.handlebars",
     "utf-8"
   );
   res.json({
@@ -406,11 +457,15 @@ app.get("/12thchem", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 app.get("/11thchem", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/11thchem.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/11thchem.handlebars",
     "utf-8"
   );
   res.json({
@@ -436,13 +491,17 @@ app.get("/11thchem", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 //10th Science, Social
 
 app.get("/10thScience", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/10thscience.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thscience.handlebars",
     "utf-8"
   );
   res.json({
@@ -465,11 +524,15 @@ app.get("/10thScience", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 app.get("/10thSocial", isLoggedIn, (req, res) => {
+  if(!req.xhr){
+    res.render('template');
+  } else {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/10thsocial.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/10thsocial.handlebars",
     "utf-8"
   );
   res.json({
@@ -527,6 +590,7 @@ app.get("/10thSocial", isLoggedIn, (req, res) => {
     userName: req.user.displayName,
     userEmail: req.user.user,
   });
+}
 });
 
 //maps are used for data sanitization from the user to prevent sql injection
@@ -569,11 +633,15 @@ let subTopicMap = new Map([
   ["Exercise Problems","isexercise_chapter_no"]
 ])
 
+app.get("/10thmathchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
+
 //example for database
 app.post("/10thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -614,10 +682,14 @@ app.post("/10thmathchapter", isLoggedIn, (req, res) => {
     });
 });
 
+app.get("/11thmathchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
+
 app.post("/11thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -658,10 +730,14 @@ app.post("/11thmathchapter", isLoggedIn, (req, res) => {
     });
 });
 
+app.get("/12thmathchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
+
 app.post("/12thmathchapter", isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplate.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplate.handlebars",
     "utf-8"
   );
   //in request you should give (chapter, exercise or example that may be boolean, problem_number);
@@ -702,10 +778,14 @@ app.post("/12thmathchapter", isLoggedIn, (req, res) => {
     });
 });
 
+app.get("/10thsocialchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
+
 //10th social post request
-app.post("/10thsocialchapter", (req, res) => {
+app.post("/10thsocialchapter",isLoggedIn,(req, res) => {
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateSocial.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateSocial.handlebars",
     "utf-8"
   );
 
@@ -738,11 +818,14 @@ app.post("/10thsocialchapter", (req, res) => {
     });
 });
 
+app.get("/11thchemchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
 
-app.post("/11thchemchapter", (req, res) => {
+app.post("/11thchemchapter",isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -788,11 +871,14 @@ app.post("/11thchemchapter", (req, res) => {
     });
 });
 
+app.get("/12thchemchapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
 
-app.post("/12thchemchapter", (req, res) => {
+app.post("/12thchemchapter",isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -802,13 +888,8 @@ app.post("/12thchemchapter", (req, res) => {
   let query;
 
   if(type == "topic"){
-    query = `select topic, youtube_link from chemistry12 where chapter_no = ${chapter} and isexample_chapter_no is null and isexercise_chapter_no is null order by id asc;
+    query = `select topic, youtube_link from chemistry12 where chapter_no = ${chapter} order by id asc;
     `;
-  } else if(type == "isexample_chapter_no"){
-    query = `select problem_no, sub_division, youtube_link from chemistry12 where chapter_no = ${chapter} and isexample_chapter_no is not null order by id asc;
-    `;
-  } else if(type == "isexercise_chapter_no"){
-    query = `select problem_no, sub_division, youtube_link from chemistry12 where chapter_no = ${chapter} and isexercise_chapter_no is not null order by id asc;`;
   }
 
   //query
@@ -838,11 +919,14 @@ app.post("/12thchemchapter", (req, res) => {
     });
 });
 
+app.get("/11thphychapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
 
-app.post("/11thphychapter", (req, res) => {
+app.post("/11thphychapter",isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -888,11 +972,14 @@ app.post("/11thphychapter", (req, res) => {
     });
 });
 
+app.get("/12thphychapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
 
-app.post("/12thphychapter", (req, res) => {
+app.post("/12thphychapter",isLoggedIn, (req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
@@ -937,10 +1024,14 @@ app.post("/12thphychapter", (req, res) => {
     });
 });
 
-app.post("/10thsciencechapter", (req, res) => {
+app.get("/10thsciencechapter", isLoggedIn, (req,res)=>{
+  res.render('template');
+})
+
+app.post("/10thsciencechapter", isLoggedIn,(req, res) => {
   debugger;
   let fileContent = fs.readFileSync(
-    "C:\Users\Admin\Downloads\MadrasPalli\views/videotemplateCPS.handlebars",
+    "/Users/krishnaraj/Downloads/Personal/MadrasPalli/MadrasPalli/views/videotemplateCPS.handlebars",
     "utf-8"
   );
 
